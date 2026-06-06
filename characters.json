@@ -1,0 +1,1182 @@
+[
+  {
+    "id": 1,
+    "name": "ダインスレイヴ",
+    "country": "カーンルイア",
+    "country_en": "khaenriah",
+    "rarity": 5,
+    "version": null,
+    "verSort": 9999,
+    "image": "カーンルイア/ダインスレイヴ.jpg"
+  },
+  {
+    "id": 2,
+    "name": "アルレッキーノ",
+    "country": "スネージナヤ",
+    "country_en": "snezhnaya",
+    "rarity": 5,
+    "version": "4.6",
+    "verSort": 406,
+    "image": "スネージナヤ/アルレッキーノ.jpg"
+  },
+  {
+    "id": 3,
+    "name": "サンドローネ",
+    "country": "スネージナヤ",
+    "country_en": "snezhnaya",
+    "rarity": 5,
+    "version": null,
+    "verSort": 9999,
+    "image": "スネージナヤ/サンドローネ.avif"
+  },
+  {
+    "id": 4,
+    "name": "タルタリヤ",
+    "country": "スネージナヤ",
+    "country_en": "snezhnaya",
+    "rarity": 5,
+    "version": "1.1",
+    "verSort": 101,
+    "image": "スネージナヤ/タルタリヤ.avif"
+  },
+  {
+    "id": 5,
+    "name": "アルハイゼン",
+    "country": "スメール",
+    "country_en": "sumeru",
+    "rarity": 5,
+    "version": "3.4",
+    "verSort": 304,
+    "image": "スメール/アルハイゼン.jpg"
+  },
+  {
+    "id": 6,
+    "name": "カーヴェ",
+    "country": "スメール",
+    "country_en": "sumeru",
+    "rarity": 4,
+    "version": "3.6",
+    "verSort": 306,
+    "image": "スメール/カーヴェ.jpg"
+  },
+  {
+    "id": 7,
+    "name": "キャンディス",
+    "country": "スメール",
+    "country_en": "sumeru",
+    "rarity": 4,
+    "version": "3.1",
+    "verSort": 301,
+    "image": "スメール/キャンディス.avif"
+  },
+  {
+    "id": 8,
+    "name": "コレイ",
+    "country": "スメール",
+    "country_en": "sumeru",
+    "rarity": 4,
+    "version": "3.0",
+    "verSort": 300,
+    "image": "スメール/コレイ.jpg"
+  },
+  {
+    "id": 9,
+    "name": "セトス",
+    "country": "スメール",
+    "country_en": "sumeru",
+    "rarity": 4,
+    "version": "4.7",
+    "verSort": 407,
+    "image": "スメール/セトス.jpg"
+  },
+  {
+    "id": 10,
+    "name": "セノ",
+    "country": "スメール",
+    "country_en": "sumeru",
+    "rarity": 5,
+    "version": "3.1",
+    "verSort": 301,
+    "image": "スメール/セノ.avif"
+  },
+  {
+    "id": 11,
+    "name": "ティナリ",
+    "country": "スメール",
+    "country_en": "sumeru",
+    "rarity": 5,
+    "version": "3.0",
+    "verSort": 300,
+    "image": "スメール/ティナリ.jpg"
+  },
+  {
+    "id": 12,
+    "name": "ディシア",
+    "country": "スメール",
+    "country_en": "sumeru",
+    "rarity": 5,
+    "version": "3.5",
+    "verSort": 305,
+    "image": "スメール/ディシア.jpg"
+  },
+  {
+    "id": 13,
+    "name": "ドリー",
+    "country": "スメール",
+    "country_en": "sumeru",
+    "rarity": 4,
+    "version": "3.0",
+    "verSort": 300,
+    "image": "スメール/ドリー.jpg"
+  },
+  {
+    "id": 14,
+    "name": "ナヒーダ",
+    "country": "スメール",
+    "country_en": "sumeru",
+    "rarity": 5,
+    "version": "3.2",
+    "verSort": 302,
+    "image": "スメール/ナヒーダ.jpg"
+  },
+  {
+    "id": 15,
+    "name": "ニィロウ",
+    "country": "スメール",
+    "country_en": "sumeru",
+    "rarity": 5,
+    "version": "3.1",
+    "verSort": 301,
+    "image": "スメール/ニィロウ.avif"
+  },
+  {
+    "id": 16,
+    "name": "ファルザン",
+    "country": "スメール",
+    "country_en": "sumeru",
+    "rarity": 4,
+    "version": "3.3",
+    "verSort": 303,
+    "image": "スメール/ファルザン.jpg"
+  },
+  {
+    "id": 17,
+    "name": "レイラ",
+    "country": "スメール",
+    "country_en": "sumeru",
+    "rarity": 4,
+    "version": "3.2",
+    "verSort": 302,
+    "image": "スメール/レイラ.jpg"
+  },
+  {
+    "id": 18,
+    "name": "放浪者",
+    "country": "スメール",
+    "country_en": "sumeru",
+    "rarity": 5,
+    "version": "3.3",
+    "verSort": 303,
+    "image": "スメール/放浪者.jpg"
+  },
+  {
+    "id": 19,
+    "name": "イアンサ",
+    "country": "ナタ",
+    "country_en": "natlan",
+    "rarity": 4,
+    "version": "5.4",
+    "verSort": 504,
+    "image": "ナタ/イアンサ.jpg"
+  },
+  {
+    "id": 20,
+    "name": "イファ",
+    "country": "ナタ",
+    "country_en": "natlan",
+    "rarity": 4,
+    "version": "5.6",
+    "verSort": 506,
+    "image": "ナタ/イファ.jpg"
+  },
+  {
+    "id": 21,
+    "name": "オロルン",
+    "country": "ナタ",
+    "country_en": "natlan",
+    "rarity": 4,
+    "version": "5.1",
+    "verSort": 501,
+    "image": "ナタ/オロルン.avif"
+  },
+  {
+    "id": 22,
+    "name": "カチーナ",
+    "country": "ナタ",
+    "country_en": "natlan",
+    "rarity": 4,
+    "version": "5.0",
+    "verSort": 500,
+    "image": "ナタ/カチーナ.jpg"
+  },
+  {
+    "id": 23,
+    "name": "キィニチ",
+    "country": "ナタ",
+    "country_en": "natlan",
+    "rarity": 5,
+    "version": "5.0",
+    "verSort": 500,
+    "image": "ナタ/キィニチ.avif"
+  },
+  {
+    "id": 24,
+    "name": "シトラリ",
+    "country": "ナタ",
+    "country_en": "natlan",
+    "rarity": 5,
+    "version": "5.3",
+    "verSort": 503,
+    "image": "ナタ/シトラリ.jpeg"
+  },
+  {
+    "id": 25,
+    "name": "シロネン",
+    "country": "ナタ",
+    "country_en": "natlan",
+    "rarity": 5,
+    "version": "5.1",
+    "verSort": 501,
+    "image": "ナタ/シロネン.avif"
+  },
+  {
+    "id": 26,
+    "name": "チャスカ",
+    "country": "ナタ",
+    "country_en": "natlan",
+    "rarity": 5,
+    "version": "5.2",
+    "verSort": 502,
+    "image": "ナタ/チャスカ.jpg"
+  },
+  {
+    "id": 27,
+    "name": "マーヴィカ",
+    "country": "ナタ",
+    "country_en": "natlan",
+    "rarity": 5,
+    "version": "5.3",
+    "verSort": 503,
+    "image": "ナタ/マーヴィカ.jpeg"
+  },
+  {
+    "id": 28,
+    "name": "ムアラニ",
+    "country": "ナタ",
+    "country_en": "natlan",
+    "rarity": 5,
+    "version": "5.0",
+    "verSort": 500,
+    "image": "ナタ/ムアラニ.jpg"
+  },
+  {
+    "id": 29,
+    "name": "ヴァレサ",
+    "country": "ナタ",
+    "country_en": "natlan",
+    "rarity": 5,
+    "version": "5.5",
+    "verSort": 505,
+    "image": "ナタ/ヴァレサ.jpg"
+  },
+  {
+    "id": 30,
+    "name": "アイノ",
+    "country": "ナドクライ",
+    "country_en": "nod-krai",
+    "rarity": 4,
+    "version": "6.0",
+    "verSort": 600,
+    "image": "ナドクライ/アイノ.jpg"
+  },
+  {
+    "id": 31,
+    "name": "イネファ",
+    "country": "ナドクライ",
+    "country_en": "nod-krai",
+    "rarity": 5,
+    "version": "6.0",
+    "verSort": 600,
+    "image": "ナドクライ/イネファ.jpg"
+  },
+  {
+    "id": 32,
+    "name": "イルーガ",
+    "country": "ナドクライ",
+    "country_en": "nod-krai",
+    "rarity": 4,
+    "version": "6.0",
+    "verSort": 600,
+    "image": "ナドクライ/イルーガ.jpg"
+  },
+  {
+    "id": 33,
+    "name": "コロンビーナ",
+    "country": "ナドクライ",
+    "country_en": "nod-krai",
+    "rarity": 5,
+    "version": "6.0",
+    "verSort": 600,
+    "image": "ナドクライ/コロンビーナ.jpg"
+  },
+  {
+    "id": 34,
+    "name": "ネフェル",
+    "country": "ナドクライ",
+    "country_en": "nod-krai",
+    "rarity": 5,
+    "version": "6.0",
+    "verSort": 600,
+    "image": "ナドクライ/ネフェル.jpg"
+  },
+  {
+    "id": 35,
+    "name": "フリンズ",
+    "country": "ナドクライ",
+    "country_en": "nod-krai",
+    "rarity": 5,
+    "version": "6.0",
+    "verSort": 600,
+    "image": "ナドクライ/フリンズ.jpg"
+  },
+  {
+    "id": 36,
+    "name": "ヤフォダ",
+    "country": "ナドクライ",
+    "country_en": "nod-krai",
+    "rarity": 4,
+    "version": "6.0",
+    "verSort": 600,
+    "image": "ナドクライ/ヤフォダ.jpg"
+  },
+  {
+    "id": 37,
+    "name": "ラウマ",
+    "country": "ナドクライ",
+    "country_en": "nod-krai",
+    "rarity": 5,
+    "version": "6.0",
+    "verSort": 600,
+    "image": "ナドクライ/ラウマ.jpg"
+  },
+  {
+    "id": 38,
+    "name": "リンネア",
+    "country": "ナドクライ",
+    "country_en": "nod-krai",
+    "rarity": 5,
+    "version": "6.0",
+    "verSort": 600,
+    "image": "ナドクライ/リンネア.avif"
+  },
+  {
+    "id": 39,
+    "name": "エスコフィエ",
+    "country": "フォンテーヌ",
+    "country_en": "fontaine",
+    "rarity": 5,
+    "version": "5.6",
+    "verSort": 506,
+    "image": "フォンテーヌ/エスコフィエ.jpg"
+  },
+  {
+    "id": 40,
+    "name": "エミリエ",
+    "country": "フォンテーヌ",
+    "country_en": "fontaine",
+    "rarity": 5,
+    "version": "4.8",
+    "verSort": 408,
+    "image": "フォンテーヌ/エミリエ.jpg"
+  },
+  {
+    "id": 41,
+    "name": "クロリンデ",
+    "country": "フォンテーヌ",
+    "country_en": "fontaine",
+    "rarity": 5,
+    "version": "4.7",
+    "verSort": 407,
+    "image": "フォンテーヌ/クロリンデ.jpg"
+  },
+  {
+    "id": 42,
+    "name": "シグウィン",
+    "country": "フォンテーヌ",
+    "country_en": "fontaine",
+    "rarity": 5,
+    "version": "4.7",
+    "verSort": 407,
+    "image": "フォンテーヌ/シグウィン.jpg"
+  },
+  {
+    "id": 43,
+    "name": "シャルロット",
+    "country": "フォンテーヌ",
+    "country_en": "fontaine",
+    "rarity": 4,
+    "version": "4.2",
+    "verSort": 402,
+    "image": "フォンテーヌ/シャルロット.jpg"
+  },
+  {
+    "id": 44,
+    "name": "シュヴルーズ",
+    "country": "フォンテーヌ",
+    "country_en": "fontaine",
+    "rarity": 4,
+    "version": "4.3",
+    "verSort": 403,
+    "image": "フォンテーヌ/シュヴルーズ.avif"
+  },
+  {
+    "id": 45,
+    "name": "ナヴィア",
+    "country": "フォンテーヌ",
+    "country_en": "fontaine",
+    "rarity": 5,
+    "version": "4.3",
+    "verSort": 403,
+    "image": "フォンテーヌ/ナヴィア.jpg"
+  },
+  {
+    "id": 46,
+    "name": "ヌヴィレット",
+    "country": "フォンテーヌ",
+    "country_en": "fontaine",
+    "rarity": 5,
+    "version": "4.1",
+    "verSort": 401,
+    "image": "フォンテーヌ/ヌヴィレット.jpg"
+  },
+  {
+    "id": 47,
+    "name": "フリーナ",
+    "country": "フォンテーヌ",
+    "country_en": "fontaine",
+    "rarity": 5,
+    "version": "4.2",
+    "verSort": 402,
+    "image": "フォンテーヌ/フリーナ.jpg"
+  },
+  {
+    "id": 48,
+    "name": "フレミネ",
+    "country": "フォンテーヌ",
+    "country_en": "fontaine",
+    "rarity": 4,
+    "version": "4.0",
+    "verSort": 400,
+    "image": "フォンテーヌ/フレミネ.jpg"
+  },
+  {
+    "id": 49,
+    "name": "リオセスリ",
+    "country": "フォンテーヌ",
+    "country_en": "fontaine",
+    "rarity": 5,
+    "version": "4.3",
+    "verSort": 403,
+    "image": "フォンテーヌ/リオセスリ.jpg"
+  },
+  {
+    "id": 50,
+    "name": "リネ",
+    "country": "フォンテーヌ",
+    "country_en": "fontaine",
+    "rarity": 5,
+    "version": "4.0",
+    "verSort": 400,
+    "image": "フォンテーヌ/リネ.jpg"
+  },
+  {
+    "id": 51,
+    "name": "リネット",
+    "country": "フォンテーヌ",
+    "country_en": "fontaine",
+    "rarity": 4,
+    "version": "4.0",
+    "verSort": 400,
+    "image": "フォンテーヌ/リネット.jpg"
+  },
+  {
+    "id": 52,
+    "name": "アルベド",
+    "country": "モンド",
+    "country_en": "mondstadt",
+    "rarity": 5,
+    "version": "1.2",
+    "verSort": 102,
+    "image": "モンド/アルベド.jpg"
+  },
+  {
+    "id": 53,
+    "name": "アンバー",
+    "country": "モンド",
+    "country_en": "mondstadt",
+    "rarity": 4,
+    "version": "1.0",
+    "verSort": 100,
+    "image": "モンド/アンバー.jpg"
+  },
+  {
+    "id": 54,
+    "name": "ウェンティ",
+    "country": "モンド",
+    "country_en": "mondstadt",
+    "rarity": 5,
+    "version": "1.0",
+    "verSort": 100,
+    "image": "モンド/ウェンティ.jpg"
+  },
+  {
+    "id": 55,
+    "name": "エウルア",
+    "country": "モンド",
+    "country_en": "mondstadt",
+    "rarity": 5,
+    "version": "1.5",
+    "verSort": 105,
+    "image": "モンド/エウルア.jpg"
+  },
+  {
+    "id": 56,
+    "name": "ガイア",
+    "country": "モンド",
+    "country_en": "mondstadt",
+    "rarity": 4,
+    "version": "1.0",
+    "verSort": 100,
+    "image": "モンド/ガイア.jpg"
+  },
+  {
+    "id": 57,
+    "name": "クレー",
+    "country": "モンド",
+    "country_en": "mondstadt",
+    "rarity": 5,
+    "version": "1.0",
+    "verSort": 100,
+    "image": "モンド/クレー.jpg"
+  },
+  {
+    "id": 58,
+    "name": "ジン",
+    "country": "モンド",
+    "country_en": "mondstadt",
+    "rarity": 5,
+    "version": "1.0",
+    "verSort": 100,
+    "image": "モンド/ジン.avif"
+  },
+  {
+    "id": 59,
+    "name": "スクロース",
+    "country": "モンド",
+    "country_en": "mondstadt",
+    "rarity": 4,
+    "version": "1.0",
+    "verSort": 100,
+    "image": "モンド/スクロース.avif"
+  },
+  {
+    "id": 60,
+    "name": "ダリア",
+    "country": "モンド",
+    "country_en": "mondstadt",
+    "rarity": 4,
+    "version": "5.7",
+    "verSort": 507,
+    "image": "モンド/ダリア.jpg"
+  },
+  {
+    "id": 61,
+    "name": "ディオナ",
+    "country": "モンド",
+    "country_en": "mondstadt",
+    "rarity": 4,
+    "version": "1.1",
+    "verSort": 101,
+    "image": "モンド/ディオナ.jpg"
+  },
+  {
+    "id": 62,
+    "name": "ディルック",
+    "country": "モンド",
+    "country_en": "mondstadt",
+    "rarity": 5,
+    "version": "1.0",
+    "verSort": 100,
+    "image": "モンド/ディルック.jpg"
+  },
+  {
+    "id": 63,
+    "name": "ドゥリン",
+    "country": "モンド",
+    "country_en": "mondstadt",
+    "rarity": 5,
+    "version": "6.2",
+    "verSort": 602,
+    "image": "モンド/ドゥリン.jpg"
+  },
+  {
+    "id": 64,
+    "name": "ノエル",
+    "country": "モンド",
+    "country_en": "mondstadt",
+    "rarity": 4,
+    "version": "1.0",
+    "verSort": 100,
+    "image": "モンド/ノエル.jpg"
+  },
+  {
+    "id": 65,
+    "name": "バーバラ",
+    "country": "モンド",
+    "country_en": "mondstadt",
+    "rarity": 4,
+    "version": "1.0",
+    "verSort": 100,
+    "image": "モンド/バーバラ.jpg"
+  },
+  {
+    "id": 66,
+    "name": "ファルカ",
+    "country": "モンド",
+    "country_en": "mondstadt",
+    "rarity": 5,
+    "version": "6.4",
+    "verSort": 604,
+    "image": "モンド/ファルカ.jpeg"
+  },
+  {
+    "id": 67,
+    "name": "フィッシュル",
+    "country": "モンド",
+    "country_en": "mondstadt",
+    "rarity": 4,
+    "version": "1.0",
+    "verSort": 100,
+    "image": "モンド/フィッシュル.avif"
+  },
+  {
+    "id": 68,
+    "name": "プルーネ",
+    "country": "モンド",
+    "country_en": "mondstadt",
+    "rarity": 4,
+    "version": "6.6",
+    "verSort": 606,
+    "image": "モンド/プルーネ.avif"
+  },
+  {
+    "id": 69,
+    "name": "ベネット",
+    "country": "モンド",
+    "country_en": "mondstadt",
+    "rarity": 4,
+    "version": "1.0",
+    "verSort": 100,
+    "image": "モンド/ベネット.jpg"
+  },
+  {
+    "id": 70,
+    "name": "ミカ",
+    "country": "モンド",
+    "country_en": "mondstadt",
+    "rarity": 4,
+    "version": "3.5",
+    "verSort": 305,
+    "image": "モンド/ミカ.jpg"
+  },
+  {
+    "id": 71,
+    "name": "モナ",
+    "country": "モンド",
+    "country_en": "mondstadt",
+    "rarity": 5,
+    "version": "1.0",
+    "verSort": 100,
+    "image": "モンド/モナ.avif"
+  },
+  {
+    "id": 72,
+    "name": "リサ",
+    "country": "モンド",
+    "country_en": "mondstadt",
+    "rarity": 4,
+    "version": "1.0",
+    "verSort": 100,
+    "image": "モンド/リサ.jpg"
+  },
+  {
+    "id": 73,
+    "name": "レザー",
+    "country": "モンド",
+    "country_en": "mondstadt",
+    "rarity": 4,
+    "version": "1.0",
+    "verSort": 100,
+    "image": "モンド/レザー.jpg"
+  },
+  {
+    "id": 74,
+    "name": "ロサリア",
+    "country": "モンド",
+    "country_en": "mondstadt",
+    "rarity": 4,
+    "version": "1.4",
+    "verSort": 104,
+    "image": "モンド/ロサリア.jpg"
+  },
+  {
+    "id": 75,
+    "name": "ローエン",
+    "country": "モンド",
+    "country_en": "mondstadt",
+    "rarity": 5,
+    "version": "6.6",
+    "verSort": 606,
+    "image": "モンド/ローエン.avif"
+  },
+  {
+    "id": 76,
+    "name": "アーロイ",
+    "country": "所属国不明",
+    "country_en": "unknown",
+    "rarity": 5,
+    "version": "2.1",
+    "verSort": 201,
+    "image": "所属国不明/アーロイ.jpg"
+  },
+  {
+    "id": 77,
+    "name": "スカーク",
+    "country": "所属国不明",
+    "country_en": "unknown",
+    "rarity": 5,
+    "version": "5.7",
+    "verSort": 507,
+    "image": "所属国不明/スカーク.jpg"
+  },
+  {
+    "id": 78,
+    "name": "ニコ",
+    "country": "所属国不明",
+    "country_en": "unknown",
+    "rarity": 5,
+    "version": "6.6",
+    "verSort": 606,
+    "image": "所属国不明/ニコ.avif"
+  },
+  {
+    "id": 79,
+    "name": "旅人",
+    "country": "所属国不明",
+    "country_en": "unknown",
+    "rarity": 5,
+    "version": "1.0",
+    "verSort": 100,
+    "image": "所属国不明/旅人.jpg"
+  },
+  {
+    "id": 80,
+    "name": "ヨォーヨ",
+    "country": "璃月",
+    "country_en": "liyue",
+    "rarity": 4,
+    "version": "3.4",
+    "verSort": 304,
+    "image": "璃月/ヨォーヨ.jpg"
+  },
+  {
+    "id": 81,
+    "name": "七七",
+    "country": "璃月",
+    "country_en": "liyue",
+    "rarity": 5,
+    "version": "1.0",
+    "verSort": 100,
+    "image": "璃月/七七.avif"
+  },
+  {
+    "id": 82,
+    "name": "兹白",
+    "country": "璃月",
+    "country_en": "liyue",
+    "rarity": 5,
+    "version": "6.3",
+    "verSort": 603,
+    "image": "璃月/兹白.jpg"
+  },
+  {
+    "id": 83,
+    "name": "凝光",
+    "country": "璃月",
+    "country_en": "liyue",
+    "rarity": 4,
+    "version": "1.0",
+    "verSort": 100,
+    "image": "璃月/凝光.jpg"
+  },
+  {
+    "id": 84,
+    "name": "刻晴",
+    "country": "璃月",
+    "country_en": "liyue",
+    "rarity": 5,
+    "version": "1.0",
+    "verSort": 100,
+    "image": "璃月/刻晴.avif"
+  },
+  {
+    "id": 85,
+    "name": "北斗",
+    "country": "璃月",
+    "country_en": "liyue",
+    "rarity": 4,
+    "version": "1.0",
+    "verSort": 100,
+    "image": "璃月/北斗.jpg"
+  },
+  {
+    "id": 86,
+    "name": "嘉明",
+    "country": "璃月",
+    "country_en": "liyue",
+    "rarity": 4,
+    "version": "4.4",
+    "verSort": 404,
+    "image": "璃月/嘉明.jpg"
+  },
+  {
+    "id": 87,
+    "name": "夜蘭",
+    "country": "璃月",
+    "country_en": "liyue",
+    "rarity": 5,
+    "version": "2.7",
+    "verSort": 207,
+    "image": "璃月/夜蘭.jpg"
+  },
+  {
+    "id": 88,
+    "name": "煙緋",
+    "country": "璃月",
+    "country_en": "liyue",
+    "rarity": 4,
+    "version": "1.5",
+    "verSort": 105,
+    "image": "璃月/煙緋.jpg"
+  },
+  {
+    "id": 89,
+    "name": "甘雨",
+    "country": "璃月",
+    "country_en": "liyue",
+    "rarity": 5,
+    "version": "1.2",
+    "verSort": 102,
+    "image": "璃月/甘雨.jpg"
+  },
+  {
+    "id": 90,
+    "name": "申鶴",
+    "country": "璃月",
+    "country_en": "liyue",
+    "rarity": 5,
+    "version": "2.4",
+    "verSort": 204,
+    "image": "璃月/申鶴.jpg"
+  },
+  {
+    "id": 91,
+    "name": "白朮",
+    "country": "璃月",
+    "country_en": "liyue",
+    "rarity": 5,
+    "version": "3.6",
+    "verSort": 306,
+    "image": "璃月/白朮.jpg"
+  },
+  {
+    "id": 92,
+    "name": "胡桃",
+    "country": "璃月",
+    "country_en": "liyue",
+    "rarity": 5,
+    "version": "1.3",
+    "verSort": 103,
+    "image": "璃月/胡桃.jpg"
+  },
+  {
+    "id": 93,
+    "name": "藍硯",
+    "country": "璃月",
+    "country_en": "liyue",
+    "rarity": 4,
+    "version": "5.4",
+    "verSort": 504,
+    "image": "璃月/藍硯.jpg"
+  },
+  {
+    "id": 94,
+    "name": "行秋",
+    "country": "璃月",
+    "country_en": "liyue",
+    "rarity": 4,
+    "version": "1.0",
+    "verSort": 100,
+    "image": "璃月/行秋.jpg"
+  },
+  {
+    "id": 95,
+    "name": "辛炎",
+    "country": "璃月",
+    "country_en": "liyue",
+    "rarity": 4,
+    "version": "1.1",
+    "verSort": 101,
+    "image": "璃月/辛炎.jpg"
+  },
+  {
+    "id": 96,
+    "name": "重雲",
+    "country": "璃月",
+    "country_en": "liyue",
+    "rarity": 4,
+    "version": "1.0",
+    "verSort": 100,
+    "image": "璃月/重雲.avif"
+  },
+  {
+    "id": 97,
+    "name": "鍾離",
+    "country": "璃月",
+    "country_en": "liyue",
+    "rarity": 5,
+    "version": "1.1",
+    "verSort": 101,
+    "image": "璃月/鍾離.avif"
+  },
+  {
+    "id": 98,
+    "name": "閑雲",
+    "country": "璃月",
+    "country_en": "liyue",
+    "rarity": 5,
+    "version": "4.4",
+    "verSort": 404,
+    "image": "璃月/閑雲.jpg"
+  },
+  {
+    "id": 99,
+    "name": "雲菫",
+    "country": "璃月",
+    "country_en": "liyue",
+    "rarity": 4,
+    "version": "2.4",
+    "verSort": 204,
+    "image": "璃月/雲菫.jpg"
+  },
+  {
+    "id": 100,
+    "name": "香菱",
+    "country": "璃月",
+    "country_en": "liyue",
+    "rarity": 4,
+    "version": "1.0",
+    "verSort": 100,
+    "image": "璃月/香菱.jpg"
+  },
+  {
+    "id": 101,
+    "name": "魈",
+    "country": "璃月",
+    "country_en": "liyue",
+    "rarity": 5,
+    "version": "1.3",
+    "verSort": 103,
+    "image": "璃月/魈.jpg"
+  },
+  {
+    "id": 102,
+    "name": "ゴロー",
+    "country": "稲妻",
+    "country_en": "inazuma",
+    "rarity": 4,
+    "version": "2.3",
+    "verSort": 203,
+    "image": "稲妻/ゴロー.jpg"
+  },
+  {
+    "id": 103,
+    "name": "トーマ",
+    "country": "稲妻",
+    "country_en": "inazuma",
+    "rarity": 4,
+    "version": "2.2",
+    "verSort": 202,
+    "image": "稲妻/トーマ.jpg"
+  },
+  {
+    "id": 104,
+    "name": "久岐忍",
+    "country": "稲妻",
+    "country_en": "inazuma",
+    "rarity": 4,
+    "version": "2.7",
+    "verSort": 207,
+    "image": "稲妻/久岐忍.jpg"
+  },
+  {
+    "id": 105,
+    "name": "九条裟羅",
+    "country": "稲妻",
+    "country_en": "inazuma",
+    "rarity": 4,
+    "version": "2.1",
+    "verSort": 201,
+    "image": "稲妻/九条裟羅.jpg"
+  },
+  {
+    "id": 106,
+    "name": "八重神子",
+    "country": "稲妻",
+    "country_en": "inazuma",
+    "rarity": 5,
+    "version": "2.5",
+    "verSort": 205,
+    "image": "稲妻/八重神子.jpg"
+  },
+  {
+    "id": 107,
+    "name": "千織",
+    "country": "稲妻",
+    "country_en": "inazuma",
+    "rarity": 5,
+    "version": "4.5",
+    "verSort": 405,
+    "image": "稲妻/千織.jpg"
+  },
+  {
+    "id": 108,
+    "name": "夢見月瑞希",
+    "country": "稲妻",
+    "country_en": "inazuma",
+    "rarity": 5,
+    "version": "5.5",
+    "verSort": 505,
+    "image": "稲妻/夢見月瑞希.jpg"
+  },
+  {
+    "id": 109,
+    "name": "宵宮",
+    "country": "稲妻",
+    "country_en": "inazuma",
+    "rarity": 5,
+    "version": "2.0",
+    "verSort": 200,
+    "image": "稲妻/宵宮.jpg"
+  },
+  {
+    "id": 110,
+    "name": "早柚",
+    "country": "稲妻",
+    "country_en": "inazuma",
+    "rarity": 4,
+    "version": "2.0",
+    "verSort": 200,
+    "image": "稲妻/早柚.jpg"
+  },
+  {
+    "id": 111,
+    "name": "楓原万葉",
+    "country": "稲妻",
+    "country_en": "inazuma",
+    "rarity": 5,
+    "version": "1.6",
+    "verSort": 106,
+    "image": "稲妻/楓原万葉.jpg"
+  },
+  {
+    "id": 112,
+    "name": "珊瑚宮心海",
+    "country": "稲妻",
+    "country_en": "inazuma",
+    "rarity": 5,
+    "version": "2.1",
+    "verSort": 201,
+    "image": "稲妻/珊瑚宮心海.jpg"
+  },
+  {
+    "id": 113,
+    "name": "神里綾人",
+    "country": "稲妻",
+    "country_en": "inazuma",
+    "rarity": 5,
+    "version": "2.6",
+    "verSort": 206,
+    "image": "稲妻/神里綾人.jpg"
+  },
+  {
+    "id": 114,
+    "name": "神里綾華",
+    "country": "稲妻",
+    "country_en": "inazuma",
+    "rarity": 5,
+    "version": "2.0",
+    "verSort": 200,
+    "image": "稲妻/神里綾華.jpg"
+  },
+  {
+    "id": 115,
+    "name": "綺良々",
+    "country": "稲妻",
+    "country_en": "inazuma",
+    "rarity": 4,
+    "version": "3.7",
+    "verSort": 307,
+    "image": "稲妻/綺良々.jpg"
+  },
+  {
+    "id": 116,
+    "name": "荒瀧一斗",
+    "country": "稲妻",
+    "country_en": "inazuma",
+    "rarity": 5,
+    "version": "2.3",
+    "verSort": 203,
+    "image": "稲妻/荒瀧一斗.jpg"
+  },
+  {
+    "id": 117,
+    "name": "雷電将軍",
+    "country": "稲妻",
+    "country_en": "inazuma",
+    "rarity": 5,
+    "version": "2.1",
+    "verSort": 201,
+    "image": "稲妻/雷電将軍.jpg"
+  },
+  {
+    "id": 118,
+    "name": "鹿野院平蔵",
+    "country": "稲妻",
+    "country_en": "inazuma",
+    "rarity": 4,
+    "version": "2.8",
+    "verSort": 208,
+    "image": "稲妻/鹿野院平蔵.jpg"
+  }
+]

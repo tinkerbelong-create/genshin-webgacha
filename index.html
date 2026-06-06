@@ -1,0 +1,1690 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>原神 祈願録</title>
+<style>
+:root{
+  /* 背景：少し青みを帯びた深い夜空 */
+  --bg-deep:#0e1a2c;
+  --bg-mid:#172940;
+  --bg-warm:#1a1f30;
+  /* メイン色：くすんだ象牙金（彩度を落として上品に） */
+  --gold:#c9a86a;
+  --gold-soft:#dec18a;
+  --gold-glow:#f1deb0;
+  /* テキスト */
+  --text:#ede4ce;
+  --text-soft:#bcae90;
+  --text-dim:#8e8470;
+  /* レアリティ */
+  --r4:#7a5fb5;
+  --r5:#c98a4a;
+  --r6:#c83a3a;
+  /* 元素色 */
+  --el-pyro:#e86a4f;
+  --el-hydro:#5a9bd4;
+  --el-anemo:#6ec0a3;
+  --el-electro:#a577e0;
+  --el-dendro:#8cc24a;
+  --el-cryo:#9bd0dc;
+  --el-geo:#d4a04a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:"Yu Mincho","Hiragino Mincho ProN","Noto Serif JP",serif;
+  color:var(--text);
+  background:linear-gradient(180deg,var(--bg-deep) 0%,var(--bg-warm) 100%);
+  background-attachment:fixed;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ヘッダー */
+.app-header{
+  position:relative;z-index:5;
+  padding:22px 32px 18px;
+  display:flex;align-items:center;gap:20px;
+  border-bottom:1px solid rgba(201,168,106,.15);
+}
+.app-title{
+  font-size:22px;letter-spacing:.04em;
+  color:var(--gold-soft);
+  font-weight:500;
+}
+.user-badge{
+  margin-left:auto;display:flex;align-items:center;gap:10px;
+  font-size:13px;color:var(--text-soft);
+}
+.user-badge .who{color:var(--gold-soft);font-weight:500}
+
+/* 画面共通 */
+main{position:relative;z-index:4;padding:24px;max-width:1200px;margin:0 auto}
+.screen{display:none;animation:fadein .35s ease-out}
+.screen.active{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.screen h2{
+  font-size:22px;color:var(--gold-soft);
+  letter-spacing:.04em;margin-bottom:10px;
+  font-weight:500;
+}
+.screen h2::after{
+  content:"";display:block;width:36px;height:1px;
+  background:var(--gold);margin-top:6px;
+}
+.screen .lead{color:var(--text-soft);font-size:13px;margin-bottom:28px;line-height:1.7}
+
+/* ボタン */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:11px 26px;border:1px solid rgba(201,168,106,.55);
+  background:rgba(201,168,106,.08);
+  color:var(--gold-soft);font-family:inherit;font-size:14px;letter-spacing:.02em;
+  cursor:pointer;transition:background .2s,border-color .2s,color .2s;
+  text-decoration:none;
+}
+.btn:hover{
+  background:rgba(201,168,106,.18);
+  border-color:var(--gold);
+  color:var(--gold-glow);
+}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn.primary{
+  background:rgba(201,168,106,.25);border-color:var(--gold);
+  color:var(--gold-glow);font-weight:500;
+}
+.btn.primary:hover{background:rgba(201,168,106,.4);box-shadow:inset 0 0 0 1px var(--gold-glow)}
+.btn.danger{border-color:#a85050;color:#ff9b9b}
+.btn.danger:hover{background:rgba(168,80,80,.2);box-shadow:0 0 14px rgba(168,80,80,.4)}
+.btn.ghost{border-color:rgba(212,180,106,.4);background:transparent;color:var(--text-dim)}
+.btn.ghost:hover{color:var(--gold-soft);border-color:var(--gold)}
+
+/* カード（L字角飾り削除） */
+.card{
+  background:rgba(23,41,64,.4);
+  border:1px solid rgba(201,168,106,.18);
+  padding:24px;
+  position:relative;
+}
+
+/* ユーザーリスト */
+.user-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:20px}
+.user-card{
+  padding:22px;cursor:pointer;text-align:center;
+  background:rgba(23,41,64,.4);
+  border:1px solid rgba(201,168,106,.2);
+  transition:border-color .25s,background .25s;
+}
+.user-card:hover{
+  border-color:var(--gold);
+  background:rgba(28,48,72,.5);
+}
+.user-card .avatar{
+  width:64px;height:64px;border-radius:50%;
+  margin:0 auto 12px;
+  background:linear-gradient(135deg,var(--gold-soft),var(--gold));
+  display:flex;align-items:center;justify-content:center;
+  font-size:28px;color:var(--bg-deep);font-weight:700;
+  box-shadow:0 0 16px rgba(212,180,106,.5);
+}
+.user-card .uname{font-size:15px;color:var(--text);letter-spacing:.02em}
+.user-card .ustats{font-size:11px;color:var(--text-dim);margin-top:6px}
+.user-card.add{border-style:dashed;color:var(--text-dim)}
+.user-card.add:hover{color:var(--gold-soft)}
+.user-card.add .avatar{background:transparent;border:1px dashed var(--gold);color:var(--gold);box-shadow:none}
+
+/* 入力 */
+.input{
+  width:100%;padding:10px 14px;
+  background:rgba(10,21,37,.7);
+  border:1px solid rgba(212,180,106,.3);
+  color:var(--text);font-family:inherit;font-size:14px;
+  outline:none;transition:border-color .2s;
+}
+.input:focus{border-color:var(--gold);box-shadow:0 0 8px rgba(212,180,106,.3)}
+
+/* モーダル */
+.modal-bg{
+  position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.78);
+  display:none;align-items:center;justify-content:center;
+}
+.modal-bg.show{display:flex}
+.modal{min-width:340px;max-width:480px}
+.modal h3{color:var(--gold-soft);font-size:17px;margin-bottom:14px;letter-spacing:.1em}
+.modal .actions{display:flex;gap:12px;margin-top:20px;justify-content:flex-end}
+
+/* レアリティ色 */
+.r4{color:var(--r4)} .r5{color:var(--r5)} .r6{color:var(--r6)}
+.bg-r4{background:linear-gradient(180deg,#5a3d8a,#3d2a5e)}
+.bg-r5{background:linear-gradient(180deg,#c47842,#8a4f24)}
+.bg-r6{background:linear-gradient(180deg,#ff5252,#a02020)}
+
+/* プレースホルダ */
+.placeholder{
+  padding:60px 20px;text-align:center;color:var(--text-dim);
+  border:1px dashed rgba(212,180,106,.2);
+  font-size:13px;letter-spacing:.1em;
+}
+
+/* キャラ選択：コントロール */
+.char-controls{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+.search-box{
+  flex:1;min-width:220px;padding:9px 14px;
+  background:rgba(10,21,37,.7);border:1px solid rgba(212,180,106,.3);
+  color:var(--text);font-family:inherit;font-size:13px;outline:none;
+}
+.search-box:focus{border-color:var(--gold);box-shadow:0 0 8px rgba(212,180,106,.3)}
+.counter{
+  font-size:13px;color:var(--text-soft);
+  padding:5px 0 5px 14px;
+}
+.counter .num{color:var(--gold-glow);font-weight:600;font-size:17px;margin:0 2px}
+.counter.danger{border-left-color:var(--r6)}
+.counter.danger .num{color:var(--r6)}
+
+/* 国別タブ */
+.country-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.country-tab{
+  padding:6px 14px;font-size:12px;letter-spacing:.02em;
+  background:transparent;border:1px solid rgba(201,168,106,.18);
+  color:var(--text-soft);cursor:pointer;font-family:inherit;
+  transition:color .2s,border-color .2s,background .2s;
+}
+.country-tab:hover{color:var(--gold-soft);border-color:rgba(212,180,106,.5)}
+.country-tab.active{background:rgba(212,180,106,.18);color:var(--gold-glow);border-color:var(--gold)}
+.country-tab .cnt{font-size:10px;opacity:.7;margin-left:6px;color:var(--gold-soft)}
+
+/* キャラグリッド */
+.char-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));
+  gap:10px;margin-top:8px;
+}
+.char-card{
+  position:relative;cursor:pointer;
+  background:linear-gradient(180deg,rgba(40,40,60,.4),rgba(15,20,35,.7));
+  border:1px solid rgba(255,255,255,.08);
+  transition:transform .15s,border-color .2s,box-shadow .2s;
+  overflow:hidden;user-select:none;
+}
+.char-card .img{
+  display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top center;
+  filter:grayscale(.7) brightness(.45);transition:filter .25s;
+  background:#1a1a28;
+}
+.char-card.owned .img{filter:none}
+.char-card .name{
+  padding:6px 4px 7px;font-size:11px;text-align:center;
+  background:rgba(0,0,0,.55);color:var(--text-dim);
+  letter-spacing:.03em;line-height:1.2;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.char-card.owned .name{color:var(--text)}
+.char-card.owned{border-color:var(--gold);box-shadow:0 0 10px rgba(212,180,106,.25)}
+.char-card.r5 .name{border-top:2px solid var(--r5)}
+.char-card.r4 .name{border-top:2px solid var(--r4)}
+.char-card .check{
+  position:absolute;top:5px;right:5px;
+  width:22px;height:22px;border-radius:50%;
+  background:var(--gold);color:var(--bg-deep);
+  display:none;align-items:center;justify-content:center;
+  font-weight:700;font-size:13px;
+  box-shadow:0 0 10px rgba(212,180,106,.6);
+}
+.char-card.owned .check{display:flex}
+.char-card:hover{transform:translateY(-3px) scale(1.03);z-index:2;border-color:var(--gold-soft)}
+
+/* ★6選択用の見た目 */
+.char-card.six{border-color:var(--r6);box-shadow:0 0 14px rgba(255,82,82,.55)}
+.char-card.six .check{background:var(--r6);color:#fff;font-size:11px;letter-spacing:-.05em}
+.char-card.six .name{border-top:2px solid var(--r6) !important;color:#ffd0d0}
+.char-card.disabled{opacity:.3;cursor:not-allowed;pointer-events:none}
+
+/* レアリティバッジ */
+.char-card .rbadge{
+  position:absolute;top:5px;left:5px;
+  font-size:10px;padding:2px 6px;
+  background:rgba(0,0,0,.65);color:var(--gold-soft);
+  letter-spacing:.05em;
+  border:1px solid rgba(212,180,106,.4);
+}
+.char-card.r5 .rbadge{color:var(--r5);border-color:var(--r5)}
+.char-card.r4 .rbadge{color:#c9a4f0;border-color:rgba(155,123,217,.6)}
+.char-card.six .rbadge{color:var(--r6);border-color:var(--r6)}
+
+/* 一括ボタン */
+.bulk-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;align-items:center}
+.bulk-row .btn{padding:6px 14px;font-size:12px;letter-spacing:.05em}
+
+/* 空状態 */
+.empty-state{
+  padding:50px 20px;text-align:center;color:var(--text-dim);
+  font-size:13px;letter-spacing:.05em;
+}
+.empty-state .hint{margin-top:10px;font-size:11px;color:var(--text-dim);opacity:.7}
+
+
+/* バージョンバッジ */
+.char-card .vbadge{
+  position:absolute;bottom:24px;right:4px;
+  font-size:9px;padding:1px 5px;
+  background:rgba(0,0,0,.7);color:var(--text-dim);
+  border-radius:2px;letter-spacing:.05em;
+}
+.char-card.owned .vbadge{color:var(--gold-soft)}
+/* ソートトグル */
+.sort-toggle{display:inline-flex;gap:2px;margin-left:auto}
+.sort-toggle button{
+  padding:5px 12px;font-size:11px;letter-spacing:.1em;
+  background:transparent;border:1px solid rgba(212,180,106,.25);
+  color:var(--text-dim);cursor:pointer;font-family:inherit;
+}
+.sort-toggle button.active{
+  background:rgba(212,180,106,.2);color:var(--gold-glow);border-color:var(--gold);
+}
+.sort-toggle button:hover{color:var(--gold-soft)}
+
+
+/* ガチャ画面：ピックアップ */
+.pickup-area{
+  display:flex;gap:18px;justify-content:center;flex-wrap:wrap;
+  margin:30px 0;padding:24px;
+  background:linear-gradient(180deg,rgba(255,82,82,.08),rgba(0,0,0,.3));
+  border:1px solid rgba(255,82,82,.3);
+  position:relative;
+}
+.pickup-area::before{
+  content:"願いの灯";
+  position:absolute;top:-10px;left:24px;
+  background:var(--bg-deep);padding:0 12px;
+  color:var(--r6);font-size:12px;letter-spacing:.05em;
+}
+.pickup-card{
+  width:140px;text-align:center;
+  border:2px solid var(--r6);
+  box-shadow:0 0 18px rgba(255,82,82,.4);
+  background:linear-gradient(180deg,rgba(60,20,20,.5),rgba(20,10,10,.6));
+}
+.pickup-card img{
+  width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top center;display:block;
+}
+.pickup-card .pname{
+  padding:8px 4px;font-size:12px;color:#ffd0d0;letter-spacing:.05em;
+  border-top:2px solid var(--r6);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.pickup-empty{
+  padding:30px;color:var(--text-dim);font-size:13px;text-align:center;
+}
+
+/* ガチャ画面：祈願概要 */
+.wish-info{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;
+  margin:20px 0;
+}
+.wish-info .stat{
+  padding:14px 18px;background:rgba(23,41,64,.4);
+  border:1px solid rgba(201,168,106,.15);
+  font-size:13px;color:var(--text-soft);
+  text-align:center;
+}
+.wish-info .stat .v{
+  display:block;color:var(--gold-glow);font-size:20px;
+  margin-top:2px;letter-spacing:.05em;
+}
+.wish-cta{
+  display:flex;gap:14px;justify-content:center;margin-top:30px;
+}
+.wish-cta .btn{padding:16px 50px;font-size:16px;letter-spacing:.2em}
+
+/* 結果画面 */
+.result-summary{
+  display:flex;gap:24px;justify-content:center;align-items:center;
+  padding:20px;margin-bottom:20px;
+  background:linear-gradient(180deg,rgba(15,36,56,.6),rgba(10,21,37,.6));
+  border:1px solid rgba(212,180,106,.25);flex-wrap:wrap;
+}
+.result-summary .rs{
+  text-align:center;font-size:13px;color:var(--text-dim);letter-spacing:.05em;
+}
+.result-summary .rs .n{
+  display:block;font-size:32px;font-weight:600;letter-spacing:.05em;line-height:1;margin-bottom:4px;
+}
+.result-summary .rs.r6 .n{color:var(--r6);text-shadow:0 0 16px rgba(255,82,82,.5)}
+.result-summary .rs.r5 .n{color:var(--r5);text-shadow:0 0 12px rgba(212,144,74,.4)}
+.result-summary .rs.r4 .n{color:#c9a4f0}
+
+.result-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:12px;
+}
+@media (max-width:700px){.result-grid{grid-template-columns:repeat(3,1fr)}}
+
+.result-card{
+  position:relative;overflow:hidden;user-select:none;
+  background:linear-gradient(180deg,rgba(40,40,60,.5),rgba(15,20,35,.7));
+  border:1px solid rgba(255,255,255,.08);
+  transition:transform .15s;
+}
+.result-card .img{
+  display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top center;
+}
+.result-card .name{
+  padding:7px 4px;font-size:12px;text-align:center;color:var(--text);
+  background:rgba(0,0,0,.55);letter-spacing:.03em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.result-card.r4{border-color:rgba(155,123,217,.5)}
+.result-card.r4 .name{border-top:3px solid #9b7bd9}
+.result-card.r5{border-color:var(--r5);box-shadow:0 0 14px rgba(212,144,74,.3)}
+.result-card.r5 .name{border-top:3px solid var(--r5);color:#ffe1c2}
+.result-card.r6{border-color:var(--r6);box-shadow:0 0 18px rgba(255,82,82,.55)}
+.result-card.r6 .name{border-top:3px solid var(--r6);color:#ffd0d0;font-weight:600}
+.result-card .rbadge{
+  position:absolute;top:6px;left:6px;
+  font-size:10px;padding:2px 7px;
+  background:rgba(0,0,0,.7);letter-spacing:.05em;
+}
+.result-card.r4 .rbadge{color:#c9a4f0;border:1px solid rgba(155,123,217,.6)}
+.result-card.r5 .rbadge{color:var(--r5);border:1px solid var(--r5)}
+.result-card.r6 .rbadge{color:var(--r6);border:1px solid var(--r6);font-weight:700}
+.result-card.r5,.result-card.r6{animation:rgrow .5s ease-out backwards}
+@keyframes rgrow{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+
+/* 履歴 */
+.history-list{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.history-item{
+  display:flex;align-items:center;gap:14px;padding:10px 14px;
+  background:rgba(15,36,56,.4);border:1px solid rgba(212,180,106,.15);
+  cursor:pointer;transition:all .2s;
+}
+.history-item:hover{border-color:var(--gold);background:rgba(15,36,56,.7)}
+.history-item .ts{color:var(--text-dim);font-size:12px;flex:1}
+.history-item .mini-counts{display:flex;gap:8px;font-size:12px}
+.history-item .mini-counts .mc{padding:2px 7px;border-radius:2px}
+.history-item .mini-counts .mc.c6{background:rgba(255,82,82,.25);color:#ffb0b0}
+.history-item .mini-counts .mc.c5{background:rgba(212,144,74,.25);color:var(--r5)}
+.history-item .mini-counts .mc.c4{background:rgba(155,123,217,.2);color:#c9a4f0}
+.history-empty{padding:40px;text-align:center;color:var(--text-dim);font-size:13px}
+
+/* フッターのナビ */
+.navbar{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;
+  padding-bottom:16px;border-bottom:1px solid rgba(212,180,106,.15);
+}
+.navbtn{
+  padding:9px 20px;background:transparent;color:var(--text-soft);
+  border:1px solid rgba(201,168,106,.18);font-family:inherit;font-size:13px;
+  letter-spacing:.03em;cursor:pointer;transition:color .2s,border-color .2s,background .2s;
+}
+.navbtn:hover{color:var(--gold-soft);border-color:rgba(212,180,106,.5)}
+.navbtn.active{color:var(--gold-glow);border-color:var(--gold);background:rgba(212,180,106,.15)}
+.navbtn:disabled{opacity:.3;cursor:not-allowed}
+
+/* ========== ガチャ演出 ========== */
+#screen-animation{
+  position:fixed;inset:0;z-index:100;
+  display:none;background:#000;color:var(--text);
+  overflow:hidden;
+}
+#screen-animation.active{display:block}
+
+.anim-stage{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  opacity:0;visibility:hidden;transition:opacity .6s;
+}
+.anim-stage.show{opacity:1;visibility:visible}
+
+.skip-btn{
+  position:absolute;top:24px;right:24px;z-index:200;
+  padding:8px 20px;font-size:12px;
+}
+
+/* ----- Stage1: 流れ星 ----- */
+.stage-meteor{
+  background:
+    radial-gradient(ellipse at center,rgba(20,40,90,.6) 0%,#000 70%),
+    linear-gradient(180deg,#020615 0%,#000510 70%,#000 100%);
+}
+.stars-bg{
+  position:absolute;inset:0;
+  background-image:
+    radial-gradient(2px 2px at 20% 30%,#fff,transparent),
+    radial-gradient(1px 1px at 60% 70%,#aef,transparent),
+    radial-gradient(1.5px 1.5px at 80% 20%,#fff,transparent),
+    radial-gradient(1px 1px at 40% 80%,#cdf,transparent),
+    radial-gradient(2px 2px at 90% 50%,#7bf,transparent),
+    radial-gradient(1px 1px at 10% 60%,#fff,transparent),
+    radial-gradient(1.5px 1.5px at 30% 90%,#aef,transparent),
+    radial-gradient(1px 1px at 70% 10%,#fff,transparent);
+  background-size:600px 600px;
+  animation:twinkle 4s ease-in-out infinite;
+}
+@keyframes twinkle{0%,100%{opacity:.6}50%{opacity:1}}
+
+.meteor{
+  position:absolute;top:-100px;left:-100px;
+  width:6px;height:6px;border-radius:50%;
+  background:#7bb5ff;box-shadow:0 0 20px 8px #7bb5ff,0 0 40px 16px rgba(123,181,255,.6);
+  animation:meteor-fall 2.6s ease-in forwards;
+}
+.meteor::after{
+  content:"";position:absolute;top:50%;left:50%;
+  width:300px;height:2px;
+  background:linear-gradient(90deg,transparent,#7bb5ff,#fff);
+  transform:translate(-100%,-50%) rotate(20deg);
+  transform-origin:100% 50%;
+  filter:blur(1px);
+}
+@keyframes meteor-fall{
+  0%{top:-10%;left:0%;opacity:0;transform:scale(.6)}
+  10%{opacity:1}
+  100%{top:80%;left:50%;opacity:0;transform:scale(1.2)}
+}
+
+.meteor-hint{
+  position:absolute;bottom:80px;left:50%;transform:translateX(-50%);
+  color:#9bb8e8;font-size:15px;letter-spacing:.05em;opacity:0;
+  animation:fadehint 1s ease .8s forwards;
+  font-weight:300;
+}
+@keyframes fadehint{to{opacity:.8}}
+
+/* ----- Stage2: 横アングル＋色変化 ----- */
+.stage-sideview{
+  background:
+    radial-gradient(ellipse at center bottom,rgba(40,60,120,.8) 0%,#000 80%),
+    linear-gradient(0deg,#0a1530 0%,#000 100%);
+  perspective:800px;
+}
+.horizon{
+  position:absolute;bottom:30%;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);
+}
+.stream-area{
+  position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+}
+.big-meteor{
+  position:absolute;left:-15%;top:50%;
+  width:28px;height:28px;border-radius:50%;
+  background:#9b7bd9;
+  box-shadow:0 0 50px 20px #9b7bd9,0 0 100px 40px rgba(155,123,217,.55);
+  transform:translateY(-50%) scale(.3);
+  /* 水平方向にゆっくり横切る。前半でじらして終盤で巨大化 */
+}
+.big-meteor::after{
+  content:"";position:absolute;top:50%;right:100%;
+  width:280px;height:4px;
+  background:linear-gradient(90deg,transparent,currentColor);
+  color:#9b7bd9;
+  transform:translateY(-50%);filter:blur(3px);opacity:.85;
+}
+/* tier別の動き */
+.big-meteor.tier-blue{
+  animation:meteor-cross 9s cubic-bezier(.55,.05,.3,1) forwards,
+            color-purple 9s ease-in-out forwards;
+}
+.big-meteor.tier-gold{
+  animation:meteor-cross 9s cubic-bezier(.55,.05,.3,1) forwards,
+            color-purple-to-gold 9s ease-in-out forwards;
+}
+.big-meteor.tier-red{
+  animation:meteor-cross 9s cubic-bezier(.55,.05,.3,1) forwards,
+            color-full-cycle 9s ease-in-out forwards;
+}
+/* 軌道：前半でじらして溜め、後半で一気に巨大化 */
+@keyframes meteor-cross{
+  0%{left:-15%;transform:translateY(-50%) scale(.3)}
+  10%{transform:translateY(-50%) scale(.5)}
+  25%{transform:translateY(-50%) scale(.85)}
+  45%{transform:translateY(-50%) scale(1.5)}
+  60%{transform:translateY(-50%) scale(2.4)}
+  75%{transform:translateY(-50%) scale(3.4)}
+  88%{transform:translateY(-50%) scale(4.3)}
+  100%{left:115%;transform:translateY(-50%) scale(4.8);opacity:.5}
+}
+/* 紫のままドキドキ脈動して光が育つ（★4のみ） */
+@keyframes color-purple{
+  0%{
+    background:#9b7bd9;
+    box-shadow:0 0 50px 20px #9b7bd9,0 0 100px 40px rgba(155,123,217,.55);
+    color:#9b7bd9;
+  }
+  35%{
+    background:#a888e3;
+    box-shadow:0 0 80px 30px #a888e3,0 0 160px 60px rgba(155,123,217,.7);
+    color:#a888e3;
+  }
+  60%{
+    background:#b89bf0;
+    box-shadow:0 0 130px 45px #b89bf0,0 0 260px 100px rgba(155,123,217,.75);
+    color:#b89bf0;
+  }
+  100%{
+    background:#c8a8e8;
+    box-shadow:0 0 200px 70px #c8a8e8,0 0 400px 150px rgba(155,123,217,.6);
+    color:#c8a8e8;
+  }
+}
+/* 紫 → 金（★5確定） */
+@keyframes color-purple-to-gold{
+  0%{
+    background:#9b7bd9;
+    box-shadow:0 0 50px 20px #9b7bd9,0 0 100px 40px rgba(155,123,217,.55);
+    color:#9b7bd9;
+  }
+  30%{
+    background:#a888e3;
+    box-shadow:0 0 80px 30px #a888e3,0 0 160px 60px rgba(155,123,217,.7);
+    color:#a888e3;
+  }
+  50%{
+    background:#e0b8b0;
+    box-shadow:0 0 120px 40px #e0b8b0,0 0 240px 90px rgba(220,160,120,.7);
+    color:#e0b8b0;
+  }
+  70%{
+    background:#ffd478;
+    box-shadow:0 0 180px 60px #ffd478,0 0 340px 130px rgba(212,144,74,.8);
+    color:#ffd478;
+  }
+  100%{
+    background:#ffe9a0;
+    box-shadow:0 0 280px 100px #ffe9a0,0 0 500px 200px rgba(255,200,100,.7),0 0 700px 280px rgba(212,144,74,.4);
+    color:#ffe9a0;
+  }
+}
+/* 紫 → 金 → 赤（★6確定） */
+@keyframes color-full-cycle{
+  0%{
+    background:#9b7bd9;
+    box-shadow:0 0 50px 20px #9b7bd9,0 0 100px 40px rgba(155,123,217,.55);
+    color:#9b7bd9;
+  }
+  22%{
+    background:#a888e3;
+    box-shadow:0 0 75px 28px #a888e3,0 0 150px 56px rgba(155,123,217,.7);
+    color:#a888e3;
+  }
+  42%{
+    background:#e0b8b0;
+    box-shadow:0 0 110px 38px #e0b8b0,0 0 220px 80px rgba(220,160,120,.7);
+    color:#e0b8b0;
+  }
+  58%{
+    background:#ffe9a0;
+    box-shadow:0 0 170px 56px #ffe9a0,0 0 320px 120px rgba(255,200,100,.75);
+    color:#ffe9a0;
+  }
+  75%{
+    background:#ffb060;
+    box-shadow:0 0 220px 75px #ff8852,0 0 420px 160px rgba(255,120,82,.8);
+    color:#ffb060;
+  }
+  100%{
+    background:#ff5252;
+    box-shadow:0 0 320px 110px #ff5252,0 0 600px 230px rgba(255,82,82,.85),0 0 850px 340px rgba(255,82,82,.5);
+    color:#ff5252;
+  }
+}
+
+/* ----- Stage3: 15体オーブ ----- */
+.stage-orbs{
+  background:
+    radial-gradient(ellipse at center,rgba(30,50,100,.6) 0%,#000 70%);
+}
+.orbs-area{
+  position:absolute;inset:0;overflow:hidden;
+}
+.mini-meteor{
+  position:absolute;
+  width:8px;height:8px;border-radius:50%;
+  opacity:0;
+  animation:mini-fall 2s cubic-bezier(.3,.6,.5,1) forwards;
+}
+.mini-meteor::after{
+  content:"";position:absolute;top:50%;right:100%;
+  width:90px;height:2px;
+  background:linear-gradient(90deg,transparent,currentColor);
+  transform-origin:right center;
+  transform:translateY(-50%) rotate(-29deg);
+  filter:blur(1px);
+}
+.mini-meteor.purple{
+  background:#9b7bd9;color:#9b7bd9;
+  box-shadow:0 0 14px 4px #9b7bd9,0 0 28px 10px rgba(155,123,217,.5);
+}
+.mini-meteor.gold{
+  background:#ffe9a0;color:#ffe9a0;
+  box-shadow:0 0 18px 5px #ffe9a0,0 0 36px 14px rgba(255,233,160,.7);
+}
+.mini-meteor.red{
+  background:#ff8080;color:#ff8080;
+  box-shadow:0 0 22px 6px #ff5252,0 0 44px 16px rgba(255,82,82,.8);
+}
+@keyframes mini-fall{
+  0%{opacity:0;transform:scale(.4) translate(0,0)}
+  10%{opacity:1}
+  100%{
+    opacity:0;
+    transform:scale(1.2) translate(110vw,62vh);
+  }
+}
+.orbs-caption{
+  position:absolute;top:14%;left:50%;transform:translateX(-50%);
+  color:var(--gold-soft);font-size:14px;letter-spacing:.3em;opacity:0;
+  animation:fadehint 1s ease 1s forwards;
+}
+
+/* ----- Stage4: ラインナップ（15体カード） ----- */
+.stage-lineup{
+  background:radial-gradient(ellipse at center,rgba(40,60,120,.4) 0%,#000 80%);
+}
+.lineup-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:10px;
+  max-width:700px;padding:24px;
+}
+.lineup-card{
+  aspect-ratio:3/4;border:2px solid;
+  background:linear-gradient(180deg,rgba(40,40,60,.5),rgba(15,20,35,.7));
+  opacity:0;transform:scale(.8) rotateY(180deg);
+  animation:lcard-in .5s ease-out forwards;
+}
+.lineup-card.r4{border-color:#9b7bd9;box-shadow:0 0 10px rgba(155,123,217,.5)}
+.lineup-card.r5{border-color:var(--r5);box-shadow:0 0 18px rgba(212,144,74,.6)}
+.lineup-card.r6{border-color:var(--r6);box-shadow:0 0 24px rgba(255,82,82,.7)}
+@keyframes lcard-in{
+  to{opacity:1;transform:scale(1) rotateY(0deg)}
+}
+
+/* ----- Stage5: 1体ずつ ----- */
+.stage-onebyone{
+  background:
+    radial-gradient(ellipse at center,rgba(30,40,80,.4) 0%,#000 80%);
+  flex-direction:column;
+  cursor:pointer;
+}
+.obo-stage{
+  position:relative;width:90%;max-width:520px;
+  display:flex;align-items:center;justify-content:center;
+}
+.obo-burst{
+  position:absolute;inset:-20%;
+  background:radial-gradient(ellipse at center,rgba(255,255,255,.0) 0%,transparent 70%);
+  pointer-events:none;
+}
+.obo-burst.r5{background:radial-gradient(ellipse at center,rgba(255,233,160,.5) 0%,transparent 70%)}
+.obo-burst.r6{background:radial-gradient(ellipse at center,rgba(255,82,82,.55) 0%,transparent 70%)}
+.obo-card{
+  position:relative;width:100%;max-width:380px;
+  background:linear-gradient(180deg,rgba(40,40,60,.6),rgba(15,20,35,.85));
+  border:3px solid;
+  animation:obo-in .7s ease-out;
+  overflow:hidden;
+}
+.obo-card.r4{border-color:#9b7bd9;box-shadow:0 0 20px rgba(155,123,217,.5)}
+.obo-card.r5{border-color:var(--r5);box-shadow:0 0 30px rgba(212,144,74,.7)}
+.obo-card.r6{border-color:var(--r6);box-shadow:0 0 40px rgba(255,82,82,.8)}
+.obo-card img{
+  display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top center;
+}
+.obo-card .obo-info{
+  padding:16px;text-align:center;
+  background:linear-gradient(180deg,rgba(0,0,0,.4),rgba(0,0,0,.8));
+}
+.obo-card .obo-name{font-size:22px;letter-spacing:.1em;color:#fff;margin-bottom:6px}
+.obo-card .obo-rarity{font-size:14px;letter-spacing:.3em;font-weight:600}
+.obo-card.r4 .obo-rarity{color:#c9a4f0}
+.obo-card.r5 .obo-rarity{color:var(--r5)}
+.obo-card.r6 .obo-rarity{color:var(--r6)}
+@keyframes obo-in{
+  0%{opacity:0;transform:scale(.5) rotateY(90deg)}
+  60%{opacity:1;transform:scale(1.05) rotateY(0deg)}
+  100%{opacity:1;transform:scale(1) rotateY(0deg)}
+}
+
+.obo-progress{
+  position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
+  color:var(--text-dim);font-size:13px;letter-spacing:.15em;
+}
+.obo-progress .nx{color:var(--gold-soft)}
+.obo-tap-hint{
+  position:absolute;bottom:60px;left:50%;transform:translateX(-50%);
+  color:var(--gold-soft);font-size:12px;letter-spacing:.05em;
+  animation:tapblink 1.4s ease-in-out infinite;
+}
+@keyframes tapblink{0%,100%{opacity:.4}50%{opacity:1}}
+
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="app-title">原神 祈願録</div>
+  <div class="user-badge" id="userBadge" style="display:none">
+    旅人：<span class="who" id="currentUserName">―</span>
+    <button class="btn ghost" style="padding:6px 14px;font-size:12px" onclick="switchUser()">切替</button>
+  </div>
+</header>
+
+<main>
+  <!-- ===== トップ：ユーザー選択 ===== -->
+  <section id="screen-top" class="screen active">
+    <h2>旅人を選ぶ</h2>
+    <p class="lead">祈願を捧げる旅人を選んでください。複数の旅人を記録できます。</p>
+    <div class="user-grid" id="userGrid"></div>
+  </section>
+
+  <!-- ===== 設定 ===== -->
+  <section id="screen-settings" class="screen">
+    <nav class="navbar">
+      <button class="navbtn active" data-tab="own">旅の仲間</button>
+      <button class="navbtn" data-tab="six">願いの灯（3名まで）</button>
+      <button class="navbtn" data-tab="data">軌跡</button>
+    </nav>
+    <div id="tab-own" class="tabpane">
+      <h2>旅の仲間</h2>
+      <p class="lead">あなたと共に在る仲間をクリックして選んでください。色が付いていれば共に旅をしています。</p>
+      <div class="char-controls">
+        <input class="search-box" id="ownSearch" placeholder="名で探す（例：胡桃、ジン...）">
+        <div class="counter">仲間 <span class="num" id="ownCounter">0</span> ／ <span id="ownTotal">0</span></div>
+        <div class="sort-toggle" data-target="own">
+          <button data-sort="version" class="active">実装順</button>
+          <button data-sort="rarity">★順</button>
+          <button data-sort="name">名前順</button>
+        </div>
+      </div>
+      <div class="country-tabs" id="ownCountryTabs"></div>
+      <div class="bulk-row">
+        <button class="btn ghost" onclick="bulkOwn(true)">表示中をすべて迎える</button>
+        <button class="btn ghost" onclick="bulkOwn(false)">表示中をすべて外す</button>
+      </div>
+      <div class="char-grid" id="ownGrid"></div>
+    </div>
+    <div id="tab-six" class="tabpane" style="display:none">
+      <h2>願いの灯</h2>
+      <p class="lead">仲間の中から最大3名を「願いの灯」に選べます。祈願では特別な紅の輝きを纏い、現れやすさも2倍に。</p>
+      <div class="char-controls">
+        <input class="search-box" id="sixSearch" placeholder="名で探す">
+        <div class="counter danger">灯 <span class="num" id="sixCounter">0</span> ／ 3</div>
+        <div class="sort-toggle" data-target="six">
+          <button data-sort="version" class="active">実装順</button>
+          <button data-sort="rarity">★順</button>
+          <button data-sort="name">名前順</button>
+        </div>
+      </div>
+      <div class="country-tabs" id="sixCountryTabs"></div>
+      <div class="char-grid" id="sixGrid"></div>
+      <div id="sixEmpty" class="empty-state" style="display:none">
+        まだ仲間がいません。
+        <div class="hint">先に「旅の仲間」で迎え入れてください。</div>
+      </div>
+    </div>
+    <div id="tab-data" class="tabpane" style="display:none">
+      <h2>軌跡</h2>
+      <p class="lead">これまでの旅と祈願の記録。</p>
+      <div class="card" style="margin-top:20px">
+        <p style="font-size:13px;color:var(--text-dim);line-height:1.8">
+          旅人：<span class="r5" id="dataUserName">―</span><br>
+          仲間の数：<span id="dataOwnCount">0</span> / <span id="dataTotalCount">0</span><br>
+          願いの灯：<span class="r6" id="dataSixCount">0</span> / 3<br>
+          祈願の回数：<span id="dataHistCount">0</span> 度
+        </p>
+        <div style="display:flex;gap:10px;margin-top:18px">
+          <button class="btn danger" onclick="deleteCurrentUser()">この旅人を消す</button>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:24px;display:flex;gap:12px">
+      <button class="btn primary" onclick="goto('gacha')" id="goGachaBtn">祈願へ →</button>
+      <button class="btn ghost" onclick="goto('top')">← 旅人を選び直す</button>
+    </div>
+  </section>
+
+  <!-- ===== ガチャ ===== -->
+  <section id="screen-gacha" class="screen">
+    <h2>祈願</h2>
+    <p class="lead">15度の願いを星に捧げます。「願いの灯」に選んだ仲間は、現れる確率が二倍となる。</p>
+
+    <div id="pickupArea" class="pickup-area"></div>
+
+    <div class="wish-info">
+      <div class="stat">仲間<span class="v" id="wishOwned">0</span></div>
+      <div class="stat">願いの灯<span class="v" id="wishSix">0</span></div>
+      <div class="stat">祈願の回数<span class="v" id="wishHist">0</span></div>
+    </div>
+
+    <div class="wish-cta">
+      <button class="btn primary" id="wishBtn" onclick="executeGacha()">願いを捧げる</button>
+    </div>
+
+    <div style="margin-top:30px;display:flex;gap:12px;justify-content:center">
+      <button class="btn ghost" onclick="goto('history')">過ぎし日の祈願</button>
+      <button class="btn ghost" onclick="goto('settings')">← 準備へ戻る</button>
+    </div>
+  </section>
+
+  <!-- ===== 結果 ===== -->
+  <section id="screen-result" class="screen">
+    <h2>祈願の結果</h2>
+    <div class="result-summary">
+      <div class="rs r6"><span class="n" id="resCount6">0</span>★6</div>
+      <div class="rs r5"><span class="n" id="resCount5">0</span>★5</div>
+      <div class="rs r4"><span class="n" id="resCount4">0</span>★4</div>
+    </div>
+    <div class="result-grid" id="resultGrid"></div>
+    <div style="margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button class="btn primary" onclick="executeGacha()">もう一度願う</button>
+      <button class="btn ghost" onclick="goto('gacha')">← 祈願へ</button>
+      <button class="btn ghost" onclick="goto('settings')">準備へ</button>
+    </div>
+  </section>
+
+  <!-- ===== 履歴 ===== -->
+  <section id="screen-history" class="screen">
+    <h2>過ぎし日の祈願</h2>
+    <p class="lead">過去に星へ捧げた願いの記録。クリックで詳細を辿れます。直近100度まで残ります。</p>
+    <div id="historyList" class="history-list"></div>
+    <div style="margin-top:30px;display:flex;gap:12px;justify-content:center">
+      <button class="btn ghost" onclick="goto('gacha')">← 祈願へ</button>
+      <button class="btn danger" onclick="clearHistory()">すべて忘れる</button>
+    </div>
+  </section>
+</main>
+
+<!-- ===== ガチャ演出 ===== -->
+<section id="screen-animation">
+  <button class="btn ghost skip-btn" onclick="skipAnimation()">とばす</button>
+
+  <div class="anim-stage stage-meteor" data-stage="meteor">
+    <div class="stars-bg"></div>
+    <div class="meteor"></div>
+    <div class="meteor-hint">願いの星が昇る</div>
+  </div>
+
+  <div class="anim-stage stage-sideview" data-stage="sideview">
+    <div class="stars-bg"></div>
+    <div class="horizon"></div>
+    <div class="stream-area">
+      <div class="big-meteor" id="bigMeteor"></div>
+    </div>
+  </div>
+
+  <div class="anim-stage stage-orbs" data-stage="orbs">
+    <div class="stars-bg"></div>
+    <div class="orbs-area" id="orbsArea"></div>
+  </div>
+
+  <div class="anim-stage stage-lineup" data-stage="lineup">
+    <div class="stars-bg"></div>
+    <div class="lineup-grid" id="lineupGrid"></div>
+  </div>
+
+  <div class="anim-stage stage-onebyone" data-stage="onebyone" onclick="oboNext()">
+    <div class="stars-bg"></div>
+    <div class="obo-stage">
+      <div class="obo-burst" id="oboBurst"></div>
+      <div class="obo-card" id="oboCard">
+        <img id="oboImg" src="" alt="">
+        <div class="obo-info">
+          <div class="obo-name" id="oboName"></div>
+          <div class="obo-rarity" id="oboRarity"></div>
+        </div>
+      </div>
+    </div>
+    <div class="obo-tap-hint">クリックで次へ</div>
+    <div class="obo-progress"><span class="nx" id="oboProgressNum">1</span> / <span id="oboProgressTotal">15</span></div>
+  </div>
+</section>
+
+
+<!-- 新規ユーザー作成モーダル -->
+<div class="modal-bg" id="modalNewUser">
+  <div class="card modal">
+    <h3>新たな旅人を迎える</h3>
+    <input class="input" id="newUserName" placeholder="名前（例：あらい）" maxlength="20">
+    <div class="actions">
+      <button class="btn ghost" onclick="closeModal('modalNewUser')">取りやめる</button>
+      <button class="btn primary" onclick="createUser()">迎え入れる</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ========== キャラデータ ========== */
+const CHARACTERS = [{"id":1,"name":"ダインスレイヴ","country":"カーンルイア","country_en":"khaenriah","rarity":5,"version":null,"verSort":9999,"image":"カーンルイア/ダインスレイヴ.jpg"},{"id":2,"name":"アルレッキーノ","country":"スネージナヤ","country_en":"snezhnaya","rarity":5,"version":"4.6","verSort":406,"image":"スネージナヤ/アルレッキーノ.jpg"},{"id":3,"name":"サンドローネ","country":"スネージナヤ","country_en":"snezhnaya","rarity":5,"version":null,"verSort":9999,"image":"スネージナヤ/サンドローネ.avif"},{"id":4,"name":"タルタリヤ","country":"スネージナヤ","country_en":"snezhnaya","rarity":5,"version":"1.1","verSort":101,"image":"スネージナヤ/タルタリヤ.avif"},{"id":5,"name":"アルハイゼン","country":"スメール","country_en":"sumeru","rarity":5,"version":"3.4","verSort":304,"image":"スメール/アルハイゼン.jpg"},{"id":6,"name":"カーヴェ","country":"スメール","country_en":"sumeru","rarity":4,"version":"3.6","verSort":306,"image":"スメール/カーヴェ.jpg"},{"id":7,"name":"キャンディス","country":"スメール","country_en":"sumeru","rarity":4,"version":"3.1","verSort":301,"image":"スメール/キャンディス.avif"},{"id":8,"name":"コレイ","country":"スメール","country_en":"sumeru","rarity":4,"version":"3.0","verSort":300,"image":"スメール/コレイ.jpg"},{"id":9,"name":"セトス","country":"スメール","country_en":"sumeru","rarity":4,"version":"4.7","verSort":407,"image":"スメール/セトス.jpg"},{"id":10,"name":"セノ","country":"スメール","country_en":"sumeru","rarity":5,"version":"3.1","verSort":301,"image":"スメール/セノ.avif"},{"id":11,"name":"ティナリ","country":"スメール","country_en":"sumeru","rarity":5,"version":"3.0","verSort":300,"image":"スメール/ティナリ.jpg"},{"id":12,"name":"ディシア","country":"スメール","country_en":"sumeru","rarity":5,"version":"3.5","verSort":305,"image":"スメール/ディシア.jpg"},{"id":13,"name":"ドリー","country":"スメール","country_en":"sumeru","rarity":4,"version":"3.0","verSort":300,"image":"スメール/ドリー.jpg"},{"id":14,"name":"ナヒーダ","country":"スメール","country_en":"sumeru","rarity":5,"version":"3.2","verSort":302,"image":"スメール/ナヒーダ.jpg"},{"id":15,"name":"ニィロウ","country":"スメール","country_en":"sumeru","rarity":5,"version":"3.1","verSort":301,"image":"スメール/ニィロウ.avif"},{"id":16,"name":"ファルザン","country":"スメール","country_en":"sumeru","rarity":4,"version":"3.3","verSort":303,"image":"スメール/ファルザン.jpg"},{"id":17,"name":"レイラ","country":"スメール","country_en":"sumeru","rarity":4,"version":"3.2","verSort":302,"image":"スメール/レイラ.jpg"},{"id":18,"name":"放浪者","country":"スメール","country_en":"sumeru","rarity":5,"version":"3.3","verSort":303,"image":"スメール/放浪者.jpg"},{"id":19,"name":"イアンサ","country":"ナタ","country_en":"natlan","rarity":4,"version":"5.4","verSort":504,"image":"ナタ/イアンサ.jpg"},{"id":20,"name":"イファ","country":"ナタ","country_en":"natlan","rarity":4,"version":"5.6","verSort":506,"image":"ナタ/イファ.jpg"},{"id":21,"name":"オロルン","country":"ナタ","country_en":"natlan","rarity":4,"version":"5.1","verSort":501,"image":"ナタ/オロルン.avif"},{"id":22,"name":"カチーナ","country":"ナタ","country_en":"natlan","rarity":4,"version":"5.0","verSort":500,"image":"ナタ/カチーナ.jpg"},{"id":23,"name":"キィニチ","country":"ナタ","country_en":"natlan","rarity":5,"version":"5.0","verSort":500,"image":"ナタ/キィニチ.avif"},{"id":24,"name":"シトラリ","country":"ナタ","country_en":"natlan","rarity":5,"version":"5.3","verSort":503,"image":"ナタ/シトラリ.jpeg"},{"id":25,"name":"シロネン","country":"ナタ","country_en":"natlan","rarity":5,"version":"5.1","verSort":501,"image":"ナタ/シロネン.avif"},{"id":26,"name":"チャスカ","country":"ナタ","country_en":"natlan","rarity":5,"version":"5.2","verSort":502,"image":"ナタ/チャスカ.jpg"},{"id":27,"name":"マーヴィカ","country":"ナタ","country_en":"natlan","rarity":5,"version":"5.3","verSort":503,"image":"ナタ/マーヴィカ.jpeg"},{"id":28,"name":"ムアラニ","country":"ナタ","country_en":"natlan","rarity":5,"version":"5.0","verSort":500,"image":"ナタ/ムアラニ.jpg"},{"id":29,"name":"ヴァレサ","country":"ナタ","country_en":"natlan","rarity":5,"version":"5.5","verSort":505,"image":"ナタ/ヴァレサ.jpg"},{"id":30,"name":"アイノ","country":"ナドクライ","country_en":"nod-krai","rarity":4,"version":"6.0","verSort":600,"image":"ナドクライ/アイノ.jpg"},{"id":31,"name":"イネファ","country":"ナドクライ","country_en":"nod-krai","rarity":5,"version":"6.0","verSort":600,"image":"ナドクライ/イネファ.jpg"},{"id":32,"name":"イルーガ","country":"ナドクライ","country_en":"nod-krai","rarity":4,"version":"6.0","verSort":600,"image":"ナドクライ/イルーガ.jpg"},{"id":33,"name":"コロンビーナ","country":"ナドクライ","country_en":"nod-krai","rarity":5,"version":"6.0","verSort":600,"image":"ナドクライ/コロンビーナ.jpg"},{"id":34,"name":"ネフェル","country":"ナドクライ","country_en":"nod-krai","rarity":5,"version":"6.0","verSort":600,"image":"ナドクライ/ネフェル.jpg"},{"id":35,"name":"フリンズ","country":"ナドクライ","country_en":"nod-krai","rarity":5,"version":"6.0","verSort":600,"image":"ナドクライ/フリンズ.jpg"},{"id":36,"name":"ヤフォダ","country":"ナドクライ","country_en":"nod-krai","rarity":4,"version":"6.0","verSort":600,"image":"ナドクライ/ヤフォダ.jpg"},{"id":37,"name":"ラウマ","country":"ナドクライ","country_en":"nod-krai","rarity":5,"version":"6.0","verSort":600,"image":"ナドクライ/ラウマ.jpg"},{"id":38,"name":"リンネア","country":"ナドクライ","country_en":"nod-krai","rarity":5,"version":"6.0","verSort":600,"image":"ナドクライ/リンネア.avif"},{"id":39,"name":"エスコフィエ","country":"フォンテーヌ","country_en":"fontaine","rarity":5,"version":"5.6","verSort":506,"image":"フォンテーヌ/エスコフィエ.jpg"},{"id":40,"name":"エミリエ","country":"フォンテーヌ","country_en":"fontaine","rarity":5,"version":"4.8","verSort":408,"image":"フォンテーヌ/エミリエ.jpg"},{"id":41,"name":"クロリンデ","country":"フォンテーヌ","country_en":"fontaine","rarity":5,"version":"4.7","verSort":407,"image":"フォンテーヌ/クロリンデ.jpg"},{"id":42,"name":"シグウィン","country":"フォンテーヌ","country_en":"fontaine","rarity":5,"version":"4.7","verSort":407,"image":"フォンテーヌ/シグウィン.jpg"},{"id":43,"name":"シャルロット","country":"フォンテーヌ","country_en":"fontaine","rarity":4,"version":"4.2","verSort":402,"image":"フォンテーヌ/シャルロット.jpg"},{"id":44,"name":"シュヴルーズ","country":"フォンテーヌ","country_en":"fontaine","rarity":4,"version":"4.3","verSort":403,"image":"フォンテーヌ/シュヴルーズ.avif"},{"id":45,"name":"ナヴィア","country":"フォンテーヌ","country_en":"fontaine","rarity":5,"version":"4.3","verSort":403,"image":"フォンテーヌ/ナヴィア.jpg"},{"id":46,"name":"ヌヴィレット","country":"フォンテーヌ","country_en":"fontaine","rarity":5,"version":"4.1","verSort":401,"image":"フォンテーヌ/ヌヴィレット.jpg"},{"id":47,"name":"フリーナ","country":"フォンテーヌ","country_en":"fontaine","rarity":5,"version":"4.2","verSort":402,"image":"フォンテーヌ/フリーナ.jpg"},{"id":48,"name":"フレミネ","country":"フォンテーヌ","country_en":"fontaine","rarity":4,"version":"4.0","verSort":400,"image":"フォンテーヌ/フレミネ.jpg"},{"id":49,"name":"リオセスリ","country":"フォンテーヌ","country_en":"fontaine","rarity":5,"version":"4.3","verSort":403,"image":"フォンテーヌ/リオセスリ.jpg"},{"id":50,"name":"リネ","country":"フォンテーヌ","country_en":"fontaine","rarity":5,"version":"4.0","verSort":400,"image":"フォンテーヌ/リネ.jpg"},{"id":51,"name":"リネット","country":"フォンテーヌ","country_en":"fontaine","rarity":4,"version":"4.0","verSort":400,"image":"フォンテーヌ/リネット.jpg"},{"id":52,"name":"アルベド","country":"モンド","country_en":"mondstadt","rarity":5,"version":"1.2","verSort":102,"image":"モンド/アルベド.jpg"},{"id":53,"name":"アンバー","country":"モンド","country_en":"mondstadt","rarity":4,"version":"1.0","verSort":100,"image":"モンド/アンバー.jpg"},{"id":54,"name":"ウェンティ","country":"モンド","country_en":"mondstadt","rarity":5,"version":"1.0","verSort":100,"image":"モンド/ウェンティ.jpg"},{"id":55,"name":"エウルア","country":"モンド","country_en":"mondstadt","rarity":5,"version":"1.5","verSort":105,"image":"モンド/エウルア.jpg"},{"id":56,"name":"ガイア","country":"モンド","country_en":"mondstadt","rarity":4,"version":"1.0","verSort":100,"image":"モンド/ガイア.jpg"},{"id":57,"name":"クレー","country":"モンド","country_en":"mondstadt","rarity":5,"version":"1.0","verSort":100,"image":"モンド/クレー.jpg"},{"id":58,"name":"ジン","country":"モンド","country_en":"mondstadt","rarity":5,"version":"1.0","verSort":100,"image":"モンド/ジン.avif"},{"id":59,"name":"スクロース","country":"モンド","country_en":"mondstadt","rarity":4,"version":"1.0","verSort":100,"image":"モンド/スクロース.avif"},{"id":60,"name":"ダリア","country":"モンド","country_en":"mondstadt","rarity":4,"version":"5.7","verSort":507,"image":"モンド/ダリア.jpg"},{"id":61,"name":"ディオナ","country":"モンド","country_en":"mondstadt","rarity":4,"version":"1.1","verSort":101,"image":"モンド/ディオナ.jpg"},{"id":62,"name":"ディルック","country":"モンド","country_en":"mondstadt","rarity":5,"version":"1.0","verSort":100,"image":"モンド/ディルック.jpg"},{"id":63,"name":"ドゥリン","country":"モンド","country_en":"mondstadt","rarity":5,"version":"6.2","verSort":602,"image":"モンド/ドゥリン.jpg"},{"id":64,"name":"ノエル","country":"モンド","country_en":"mondstadt","rarity":4,"version":"1.0","verSort":100,"image":"モンド/ノエル.jpg"},{"id":65,"name":"バーバラ","country":"モンド","country_en":"mondstadt","rarity":4,"version":"1.0","verSort":100,"image":"モンド/バーバラ.jpg"},{"id":66,"name":"ファルカ","country":"モンド","country_en":"mondstadt","rarity":5,"version":"6.4","verSort":604,"image":"モンド/ファルカ.jpeg"},{"id":67,"name":"フィッシュル","country":"モンド","country_en":"mondstadt","rarity":4,"version":"1.0","verSort":100,"image":"モンド/フィッシュル.avif"},{"id":68,"name":"プルーネ","country":"モンド","country_en":"mondstadt","rarity":4,"version":"6.6","verSort":606,"image":"モンド/プルーネ.avif"},{"id":69,"name":"ベネット","country":"モンド","country_en":"mondstadt","rarity":4,"version":"1.0","verSort":100,"image":"モンド/ベネット.jpg"},{"id":70,"name":"ミカ","country":"モンド","country_en":"mondstadt","rarity":4,"version":"3.5","verSort":305,"image":"モンド/ミカ.jpg"},{"id":71,"name":"モナ","country":"モンド","country_en":"mondstadt","rarity":5,"version":"1.0","verSort":100,"image":"モンド/モナ.avif"},{"id":72,"name":"リサ","country":"モンド","country_en":"mondstadt","rarity":4,"version":"1.0","verSort":100,"image":"モンド/リサ.jpg"},{"id":73,"name":"レザー","country":"モンド","country_en":"mondstadt","rarity":4,"version":"1.0","verSort":100,"image":"モンド/レザー.jpg"},{"id":74,"name":"ロサリア","country":"モンド","country_en":"mondstadt","rarity":4,"version":"1.4","verSort":104,"image":"モンド/ロサリア.jpg"},{"id":75,"name":"ローエン","country":"モンド","country_en":"mondstadt","rarity":5,"version":"6.6","verSort":606,"image":"モンド/ローエン.avif"},{"id":76,"name":"アーロイ","country":"所属国不明","country_en":"unknown","rarity":5,"version":"2.1","verSort":201,"image":"所属国不明/アーロイ.jpg"},{"id":77,"name":"スカーク","country":"所属国不明","country_en":"unknown","rarity":5,"version":"5.7","verSort":507,"image":"所属国不明/スカーク.jpg"},{"id":78,"name":"ニコ","country":"所属国不明","country_en":"unknown","rarity":5,"version":"6.6","verSort":606,"image":"所属国不明/ニコ.avif"},{"id":79,"name":"旅人","country":"所属国不明","country_en":"unknown","rarity":5,"version":"1.0","verSort":100,"image":"所属国不明/旅人.jpg"},{"id":80,"name":"ヨォーヨ","country":"璃月","country_en":"liyue","rarity":4,"version":"3.4","verSort":304,"image":"璃月/ヨォーヨ.jpg"},{"id":81,"name":"七七","country":"璃月","country_en":"liyue","rarity":5,"version":"1.0","verSort":100,"image":"璃月/七七.avif"},{"id":82,"name":"兹白","country":"璃月","country_en":"liyue","rarity":5,"version":"6.3","verSort":603,"image":"璃月/兹白.jpg"},{"id":83,"name":"凝光","country":"璃月","country_en":"liyue","rarity":4,"version":"1.0","verSort":100,"image":"璃月/凝光.jpg"},{"id":84,"name":"刻晴","country":"璃月","country_en":"liyue","rarity":5,"version":"1.0","verSort":100,"image":"璃月/刻晴.avif"},{"id":85,"name":"北斗","country":"璃月","country_en":"liyue","rarity":4,"version":"1.0","verSort":100,"image":"璃月/北斗.jpg"},{"id":86,"name":"嘉明","country":"璃月","country_en":"liyue","rarity":4,"version":"4.4","verSort":404,"image":"璃月/嘉明.jpg"},{"id":87,"name":"夜蘭","country":"璃月","country_en":"liyue","rarity":5,"version":"2.7","verSort":207,"image":"璃月/夜蘭.jpg"},{"id":88,"name":"煙緋","country":"璃月","country_en":"liyue","rarity":4,"version":"1.5","verSort":105,"image":"璃月/煙緋.jpg"},{"id":89,"name":"甘雨","country":"璃月","country_en":"liyue","rarity":5,"version":"1.2","verSort":102,"image":"璃月/甘雨.jpg"},{"id":90,"name":"申鶴","country":"璃月","country_en":"liyue","rarity":5,"version":"2.4","verSort":204,"image":"璃月/申鶴.jpg"},{"id":91,"name":"白朮","country":"璃月","country_en":"liyue","rarity":5,"version":"3.6","verSort":306,"image":"璃月/白朮.jpg"},{"id":92,"name":"胡桃","country":"璃月","country_en":"liyue","rarity":5,"version":"1.3","verSort":103,"image":"璃月/胡桃.jpg"},{"id":93,"name":"藍硯","country":"璃月","country_en":"liyue","rarity":4,"version":"5.4","verSort":504,"image":"璃月/藍硯.jpg"},{"id":94,"name":"行秋","country":"璃月","country_en":"liyue","rarity":4,"version":"1.0","verSort":100,"image":"璃月/行秋.jpg"},{"id":95,"name":"辛炎","country":"璃月","country_en":"liyue","rarity":4,"version":"1.1","verSort":101,"image":"璃月/辛炎.jpg"},{"id":96,"name":"重雲","country":"璃月","country_en":"liyue","rarity":4,"version":"1.0","verSort":100,"image":"璃月/重雲.avif"},{"id":97,"name":"鍾離","country":"璃月","country_en":"liyue","rarity":5,"version":"1.1","verSort":101,"image":"璃月/鍾離.avif"},{"id":98,"name":"閑雲","country":"璃月","country_en":"liyue","rarity":5,"version":"4.4","verSort":404,"image":"璃月/閑雲.jpg"},{"id":99,"name":"雲菫","country":"璃月","country_en":"liyue","rarity":4,"version":"2.4","verSort":204,"image":"璃月/雲菫.jpg"},{"id":100,"name":"香菱","country":"璃月","country_en":"liyue","rarity":4,"version":"1.0","verSort":100,"image":"璃月/香菱.jpg"},{"id":101,"name":"魈","country":"璃月","country_en":"liyue","rarity":5,"version":"1.3","verSort":103,"image":"璃月/魈.jpg"},{"id":102,"name":"ゴロー","country":"稲妻","country_en":"inazuma","rarity":4,"version":"2.3","verSort":203,"image":"稲妻/ゴロー.jpg"},{"id":103,"name":"トーマ","country":"稲妻","country_en":"inazuma","rarity":4,"version":"2.2","verSort":202,"image":"稲妻/トーマ.jpg"},{"id":104,"name":"久岐忍","country":"稲妻","country_en":"inazuma","rarity":4,"version":"2.7","verSort":207,"image":"稲妻/久岐忍.jpg"},{"id":105,"name":"九条裟羅","country":"稲妻","country_en":"inazuma","rarity":4,"version":"2.1","verSort":201,"image":"稲妻/九条裟羅.jpg"},{"id":106,"name":"八重神子","country":"稲妻","country_en":"inazuma","rarity":5,"version":"2.5","verSort":205,"image":"稲妻/八重神子.jpg"},{"id":107,"name":"千織","country":"稲妻","country_en":"inazuma","rarity":5,"version":"4.5","verSort":405,"image":"稲妻/千織.jpg"},{"id":108,"name":"夢見月瑞希","country":"稲妻","country_en":"inazuma","rarity":5,"version":"5.5","verSort":505,"image":"稲妻/夢見月瑞希.jpg"},{"id":109,"name":"宵宮","country":"稲妻","country_en":"inazuma","rarity":5,"version":"2.0","verSort":200,"image":"稲妻/宵宮.jpg"},{"id":110,"name":"早柚","country":"稲妻","country_en":"inazuma","rarity":4,"version":"2.0","verSort":200,"image":"稲妻/早柚.jpg"},{"id":111,"name":"楓原万葉","country":"稲妻","country_en":"inazuma","rarity":5,"version":"1.6","verSort":106,"image":"稲妻/楓原万葉.jpg"},{"id":112,"name":"珊瑚宮心海","country":"稲妻","country_en":"inazuma","rarity":5,"version":"2.1","verSort":201,"image":"稲妻/珊瑚宮心海.jpg"},{"id":113,"name":"神里綾人","country":"稲妻","country_en":"inazuma","rarity":5,"version":"2.6","verSort":206,"image":"稲妻/神里綾人.jpg"},{"id":114,"name":"神里綾華","country":"稲妻","country_en":"inazuma","rarity":5,"version":"2.0","verSort":200,"image":"稲妻/神里綾華.jpg"},{"id":115,"name":"綺良々","country":"稲妻","country_en":"inazuma","rarity":4,"version":"3.7","verSort":307,"image":"稲妻/綺良々.jpg"},{"id":116,"name":"荒瀧一斗","country":"稲妻","country_en":"inazuma","rarity":5,"version":"2.3","verSort":203,"image":"稲妻/荒瀧一斗.jpg"},{"id":117,"name":"雷電将軍","country":"稲妻","country_en":"inazuma","rarity":5,"version":"2.1","verSort":201,"image":"稲妻/雷電将軍.jpg"},{"id":118,"name":"鹿野院平蔵","country":"稲妻","country_en":"inazuma","rarity":4,"version":"2.8","verSort":208,"image":"稲妻/鹿野院平蔵.jpg"}];
+
+/* ========== 状態管理 ========== */
+const LS_KEY = "genshin_web_gacha_v1";
+let state = loadState();
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if(raw){
+      const s = JSON.parse(raw);
+      // 旧データ補完
+      (s.users||[]).forEach(u=>{
+        u.owned ||= []; u.sixStars ||= []; u.history ||= [];
+      });
+      return s;
+    }
+  }catch(e){}
+  return {users:[], currentUserId:null};
+}
+function saveState(){
+  localStorage.setItem(LS_KEY, JSON.stringify(state));
+}
+function uuid(){return "u"+Math.random().toString(36).slice(2,10)+Date.now().toString(36).slice(-4)}
+
+function currentUser(){
+  if(!state.currentUserId) return null;
+  return state.users.find(u=>u.id===state.currentUserId) || null;
+}
+
+/* ========== 画面遷移 ========== */
+function goto(screen){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById("screen-"+screen).classList.add("active");
+  if(screen==="top"){renderUserGrid()}
+  if(screen==="settings"){renderSettings()}
+  if(screen==="gacha"){renderGachaScreen()}
+  if(screen==="result"){renderResultScreen()}
+  if(screen==="history"){renderHistoryScreen()}
+  updateBadge();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function updateBadge(){
+  const u = currentUser();
+  const b = document.getElementById("userBadge");
+  if(u){
+    b.style.display = "flex";
+    document.getElementById("currentUserName").textContent = u.name;
+  }else{
+    b.style.display = "none";
+  }
+}
+function switchUser(){goto("top")}
+
+/* ========== ユーザー管理 ========== */
+function renderUserGrid(){
+  const grid = document.getElementById("userGrid");
+  grid.innerHTML = "";
+  state.users.forEach(u=>{
+    const card = document.createElement("div");
+    card.className = "user-card";
+    const initial = (u.name||"?").slice(0,1);
+    const ownCount = (u.owned||[]).length;
+    const sixCount = (u.sixStars||[]).length;
+    card.innerHTML = `
+      <div class="avatar">${escapeHtml(initial)}</div>
+      <div class="uname">${escapeHtml(u.name)}</div>
+      <div class="ustats">仲間 ${ownCount} ／ 灯 ${sixCount}</div>
+    `;
+    card.onclick = ()=>selectUser(u.id);
+    grid.appendChild(card);
+  });
+  const add = document.createElement("div");
+  add.className = "user-card add";
+  add.innerHTML = `<div class="avatar">＋</div><div class="uname">新たな旅人</div>`;
+  add.onclick = ()=>openModal("modalNewUser");
+  grid.appendChild(add);
+}
+
+function openModal(id){
+  document.getElementById(id).classList.add("show");
+  if(id==="modalNewUser"){
+    setTimeout(()=>document.getElementById("newUserName").focus(),50);
+  }
+}
+function closeModal(id){document.getElementById(id).classList.remove("show")}
+
+function createUser(){
+  const input = document.getElementById("newUserName");
+  const name = input.value.trim();
+  if(!name){input.focus();return}
+  const u = {
+    id: uuid(),
+    name,
+    owned: [],
+    sixStars: [],
+    history: [],
+    createdAt: Date.now(),
+  };
+  state.users.push(u);
+  state.currentUserId = u.id;
+  saveState();
+  input.value = "";
+  closeModal("modalNewUser");
+  goto("settings");
+}
+
+function selectUser(id){
+  state.currentUserId = id;
+  saveState();
+  goto("settings");
+}
+
+function deleteCurrentUser(){
+  const u = currentUser(); if(!u) return;
+  if(!confirm(`旅人「${u.name}」の記録を消しますか？\n所持・祈願の軌跡もすべて消えます。`)) return;
+  state.users = state.users.filter(x=>x.id!==u.id);
+  state.currentUserId = null;
+  saveState();
+  goto("top");
+}
+
+/* ========== 設定画面 ========== */
+const COUNTRY_ORDER = ["モンド","璃月","稲妻","スメール","フォンテーヌ","ナタ","ナドクライ","スネージナヤ","カーンルイア","所属国不明"];
+const ownFilter = {country:"all", search:""};
+const sixFilter = {country:"all", search:""};
+
+function renderSettings(){
+  const u = currentUser();
+  if(!u){goto("top");return}
+  document.querySelectorAll(".navbtn").forEach(b=>{
+    b.onclick = ()=>{
+      document.querySelectorAll(".navbtn").forEach(x=>x.classList.remove("active"));
+      b.classList.add("active");
+      ["own","six","data"].forEach(t=>{
+        document.getElementById("tab-"+t).style.display = (t===b.dataset.tab)?"":"none";
+      });
+      if(b.dataset.tab==="own") renderOwnTab();
+      if(b.dataset.tab==="six") renderSixTab();
+      if(b.dataset.tab==="data") renderDataTab();
+    };
+  });
+  // 設定に入るたび「所持キャラ選択」タブを表示
+  document.querySelectorAll(".navbtn").forEach(x=>x.classList.remove("active"));
+  document.querySelector(`.navbtn[data-tab="own"]`).classList.add("active");
+  document.getElementById("tab-own").style.display = "";
+  document.getElementById("tab-six").style.display = "none";
+  document.getElementById("tab-data").style.display = "none";
+  renderOwnTab();
+  renderDataTab();
+  updateGachaButton();
+}
+
+function renderDataTab(){
+  const u = currentUser(); if(!u) return;
+  document.getElementById("dataUserName").textContent = u.name;
+  document.getElementById("dataOwnCount").textContent = (u.owned||[]).length;
+  document.getElementById("dataTotalCount").textContent = CHARACTERS.length;
+  document.getElementById("dataSixCount").textContent = (u.sixStars||[]).length;
+  document.getElementById("dataHistCount").textContent = (u.history||[]).length;
+}
+
+function updateGachaButton(){
+  const u = currentUser();
+  const canGacha = u && (u.owned||[]).length >= 15;
+  const btn = document.getElementById("goGachaBtn");
+  btn.disabled = !canGacha;
+  btn.title = canGacha ? "" : "15度の祈願には15名以上の仲間が必要";
+}
+
+
+/* ---- ソート ---- */
+const sortMode = {own:"version", six:"version"};
+
+function sortChars(list, mode){
+  const copy = list.slice();
+  if(mode==="name"){
+    copy.sort((a,b)=> a.name.localeCompare(b.name,"ja"));
+  }else if(mode==="rarity"){
+    copy.sort((a,b)=> b.rarity-a.rarity || a.verSort-b.verSort || a.name.localeCompare(b.name,"ja"));
+  }else{ // version (デフォルト) — 古い順、同バージョン内は★5→★4
+    copy.sort((a,b)=> a.verSort-b.verSort || b.rarity-a.rarity || a.name.localeCompare(b.name,"ja"));
+  }
+  return copy;
+}
+
+function bindSortToggle(target, onChange){
+  document.querySelectorAll(`.sort-toggle[data-target="${target}"] button`).forEach(b=>{
+    b.classList.toggle("active", b.dataset.sort===sortMode[target]);
+    b.onclick = ()=>{
+      sortMode[target] = b.dataset.sort;
+      document.querySelectorAll(`.sort-toggle[data-target="${target}"] button`).forEach(x=>{
+        x.classList.toggle("active", x.dataset.sort===sortMode[target]);
+      });
+      onChange();
+    };
+  });
+}
+
+/* ---- 国別タブ ---- */
+function renderCountryTabs(containerId, filter, onChange, ownedOnly){
+  const u = currentUser(); if(!u) return;
+  const container = document.getElementById(containerId);
+  container.innerHTML = "";
+  const baseChars = ownedOnly
+    ? CHARACTERS.filter(c=>u.owned.includes(c.id))
+    : CHARACTERS;
+  const totalAll = baseChars.length;
+  const ownedAll = baseChars.filter(c=>u.owned.includes(c.id)).length;
+  const allBtn = makeCountryBtn("all", "全部", ownedAll, totalAll, filter, ownedOnly);
+  allBtn.onclick = ()=>{ filter.country="all"; onChange(); };
+  container.appendChild(allBtn);
+  COUNTRY_ORDER.forEach(country=>{
+    const list = baseChars.filter(c=>c.country===country);
+    if(list.length===0) return;
+    const owned = list.filter(c=>u.owned.includes(c.id)).length;
+    const btn = makeCountryBtn(country, country, owned, list.length, filter, ownedOnly);
+    btn.onclick = ()=>{ filter.country=country; onChange(); };
+    container.appendChild(btn);
+  });
+}
+function makeCountryBtn(value, label, owned, total, filter, ownedOnly){
+  const btn = document.createElement("button");
+  btn.className = "country-tab" + (filter.country===value?" active":"");
+  const cnt = ownedOnly ? `<span class="cnt">${total}</span>` : `<span class="cnt">${owned}/${total}</span>`;
+  btn.innerHTML = `${escapeHtml(label)}${cnt}`;
+  return btn;
+}
+
+/* ---- 所持キャラ選択 ---- */
+function renderOwnTab(){
+  const u = currentUser(); if(!u) return;
+  bindSortToggle("own", renderOwnGrid);
+  renderCountryTabs("ownCountryTabs", ownFilter, renderOwnTab, false);
+  const searchEl = document.getElementById("ownSearch");
+  searchEl.value = ownFilter.search;
+  searchEl.oninput = (e)=>{ ownFilter.search = e.target.value; renderOwnGrid(); };
+  document.getElementById("ownCounter").textContent = u.owned.length;
+  document.getElementById("ownTotal").textContent = CHARACTERS.length;
+  renderOwnGrid();
+}
+
+function renderOwnGrid(){
+  const u = currentUser(); if(!u) return;
+  const grid = document.getElementById("ownGrid");
+  grid.innerHTML = "";
+  let chars = filterChars(CHARACTERS, ownFilter);
+  chars = sortChars(chars, sortMode.own);
+  chars.forEach(c=>{
+    const owned = u.owned.includes(c.id);
+    const isSix = (u.sixStars||[]).includes(c.id);
+    grid.appendChild(makeCharCard(c, {owned, isSix, mode:"own"}));
+  });
+}
+
+/* ---- ★6選択 ---- */
+function renderSixTab(){
+  const u = currentUser(); if(!u) return;
+  bindSortToggle("six", renderSixGrid);
+  const ownedChars = CHARACTERS.filter(c=>u.owned.includes(c.id));
+  if(ownedChars.length===0){
+    document.getElementById("sixEmpty").style.display = "";
+    document.getElementById("sixGrid").innerHTML = "";
+    document.getElementById("sixCountryTabs").innerHTML = "";
+    document.getElementById("sixCounter").textContent = (u.sixStars||[]).length;
+    return;
+  }
+  document.getElementById("sixEmpty").style.display = "none";
+  renderCountryTabs("sixCountryTabs", sixFilter, renderSixTab, true);
+  const searchEl = document.getElementById("sixSearch");
+  searchEl.value = sixFilter.search;
+  searchEl.oninput = (e)=>{ sixFilter.search = e.target.value; renderSixGrid(); };
+  document.getElementById("sixCounter").textContent = (u.sixStars||[]).length;
+  renderSixGrid();
+}
+
+function renderSixGrid(){
+  const u = currentUser(); if(!u) return;
+  const grid = document.getElementById("sixGrid");
+  grid.innerHTML = "";
+  const onlyOwned = CHARACTERS.filter(c=>u.owned.includes(c.id));
+  let chars = filterChars(onlyOwned, sixFilter);
+  chars = sortChars(chars, sortMode.six);
+  const sixCount = (u.sixStars||[]).length;
+  const reached = sixCount >= 3;
+  chars.forEach(c=>{
+    const isSix = u.sixStars.includes(c.id);
+    const disabled = !isSix && reached;
+    grid.appendChild(makeCharCard(c, {owned:true, isSix, mode:"six", disabled}));
+  });
+}
+
+/* ---- 共通：キャラカード ---- */
+function makeCharCard(c, opts){
+  const {owned=false, isSix=false, mode="own", disabled=false} = opts;
+  const card = document.createElement("div");
+  const cls = ["char-card", "r"+c.rarity];
+  if(owned) cls.push("owned");
+  if(isSix) cls.push("six");
+  if(disabled) cls.push("disabled");
+  card.className = cls.join(" ");
+  const ratLabel = isSix ? "★6" : (c.rarity===5 ? "★5" : "★4");
+  const checkMark = isSix ? "★" : "✓";
+  const verBadge = c.version ? `<span class="vbadge">v${c.version}</span>` : "";
+  card.innerHTML = `
+    <img class="img" src="${encodeURI(c.image)}" alt="${escapeHtml(c.name)}" loading="lazy" onerror="this.style.opacity=0.2;this.alt='画像なし'">
+    <span class="rbadge">${ratLabel}</span>
+    <span class="check">${checkMark}</span>
+    ${verBadge}
+    <div class="name">${escapeHtml(c.name)}</div>
+  `;
+  card.onclick = ()=>{
+    if(mode==="own") toggleOwn(c.id);
+    else toggleSix(c.id);
+  };
+  return card;
+}
+
+function filterChars(list, filter){
+  const q = (filter.search||"").trim();
+  return list.filter(c=>{
+    if(filter.country!=="all" && c.country!==filter.country) return false;
+    if(q && !c.name.includes(q)) return false;
+    return true;
+  });
+}
+
+/* ---- トグル操作 ---- */
+function toggleOwn(id){
+  const u = currentUser(); if(!u) return;
+  const idx = u.owned.indexOf(id);
+  if(idx>=0){
+    u.owned.splice(idx,1);
+    const sIdx = u.sixStars.indexOf(id);
+    if(sIdx>=0) u.sixStars.splice(sIdx,1);
+  }else{
+    u.owned.push(id);
+  }
+  saveState();
+  renderOwnTab();
+  renderDataTab();
+  updateGachaButton();
+}
+
+function toggleSix(id){
+  const u = currentUser(); if(!u) return;
+  const idx = u.sixStars.indexOf(id);
+  if(idx>=0){
+    u.sixStars.splice(idx,1);
+  }else{
+    if(u.sixStars.length>=3) return;
+    u.sixStars.push(id);
+  }
+  saveState();
+  renderSixTab();
+  renderDataTab();
+}
+
+function bulkOwn(setOwned){
+  const u = currentUser(); if(!u) return;
+  const chars = filterChars(CHARACTERS, ownFilter);
+  const ids = chars.map(c=>c.id);
+  if(setOwned){
+    ids.forEach(id=>{ if(!u.owned.includes(id)) u.owned.push(id); });
+  }else{
+    u.owned = u.owned.filter(id=>!ids.includes(id));
+    u.sixStars = u.sixStars.filter(id=>!ids.includes(id));
+  }
+  saveState();
+  renderOwnTab();
+  renderDataTab();
+  updateGachaButton();
+}
+
+
+/* ========== ガチャ抽選 ========== */
+let currentResult = null;  // 結果画面表示用（直近の抽選結果）
+
+function weightedDraw(pool){
+  const total = pool.reduce((s,p)=>s+p.weight, 0);
+  let r = Math.random() * total;
+  for(const p of pool){
+    r -= p.weight;
+    if(r <= 0) return p.item;
+  }
+  return pool[pool.length-1].item;
+}
+
+function drawGacha(user, count=15){
+  const owned = CHARACTERS.filter(c => user.owned.includes(c.id));
+  const sixSet = new Set(user.sixStars||[]);
+  // 重み付きプール（★6=2、それ以外=1）
+  let pool = owned.map(c => ({item:c, weight: sixSet.has(c.id) ? 2 : 1}));
+  // 所持数が抽選数より少なければ抽選数を下げる（安全策）
+  const drawCount = Math.min(count, pool.length);
+  const results = [];
+  for(let i=0; i<drawCount; i++){
+    if(pool.length === 0) break;
+    const c = weightedDraw(pool);
+    const isSix = sixSet.has(c.id);
+    results.push({
+      char: c,
+      isSix,
+      displayRarity: isSix ? 6 : c.rarity,
+    });
+    // 引いたキャラはプールから除外（重複なし）
+    pool = pool.filter(p => p.item.id !== c.id);
+  }
+  return results;
+}
+
+function executeGacha(){
+  const u = currentUser();
+  if(!u){ goto("top"); return; }
+  if((u.owned||[]).length < 15){
+    alert("仲間が15名に満たないようです。先に「旅の仲間」で迎えてください。");
+    goto("settings"); return;
+  }
+  const results = drawGacha(u, 15);
+  // 履歴に保存（最新100件まで）
+  u.history = u.history || [];
+  u.history.unshift({
+    ts: Date.now(),
+    results: results.map(r => ({
+      id: r.char.id,
+      isSix: r.isSix,
+      dr: r.displayRarity,
+    })),
+  });
+  if(u.history.length > 100) u.history.length = 100;
+  saveState();
+  currentResult = results;
+  startGachaAnimation(results);
+}
+
+/* ========== ガチャ画面 ========== */
+function renderGachaScreen(){
+  const u = currentUser();
+  if(!u){ goto("top"); return; }
+  // 統計
+  document.getElementById("wishOwned").textContent = (u.owned||[]).length;
+  document.getElementById("wishSix").textContent = (u.sixStars||[]).length;
+  document.getElementById("wishHist").textContent = (u.history||[]).length;
+  // ピックアップ（★6指定キャラ）
+  const pickArea = document.getElementById("pickupArea");
+  pickArea.innerHTML = "";
+  const sixIds = u.sixStars || [];
+  if(sixIds.length === 0){
+    pickArea.innerHTML = '<div class="pickup-empty">願いの灯が未指定。「準備 → 願いの灯」から3名まで選べます。</div>';
+  }else{
+    sixIds.forEach(id => {
+      const c = CHARACTERS.find(x => x.id === id);
+      if(!c) return;
+      const card = document.createElement("div");
+      card.className = "pickup-card";
+      card.innerHTML = `
+        <img src="${encodeURI(c.image)}" alt="${escapeHtml(c.name)}" loading="lazy" onerror="this.style.opacity=0.2">
+        <div class="pname">${escapeHtml(c.name)}</div>`;
+      pickArea.appendChild(card);
+    });
+  }
+  // ボタン制御
+  const btn = document.getElementById("wishBtn");
+  const canDraw = (u.owned||[]).length >= 15;
+  btn.disabled = !canDraw;
+  btn.title = canDraw ? "" : "所持キャラが15体未満";
+}
+
+/* ========== 結果画面 ========== */
+function renderResultScreen(){
+  if(!currentResult){
+    // 履歴から最新を再構成（リロード対応）
+    const u = currentUser();
+    if(u && (u.history||[]).length > 0){
+      const latest = u.history[0];
+      currentResult = latest.results.map(r => ({
+        char: CHARACTERS.find(c => c.id === r.id),
+        isSix: r.isSix,
+        displayRarity: r.dr,
+      })).filter(r => r.char);
+    }
+  }
+  if(!currentResult){
+    document.getElementById("resultGrid").innerHTML =
+      '<div class="empty-state" style="grid-column:1/-1">まだ願いを捧げていません</div>';
+    return;
+  }
+  // 集計
+  const counts = {6:0, 5:0, 4:0};
+  currentResult.forEach(r => counts[r.displayRarity]++);
+  document.getElementById("resCount6").textContent = counts[6];
+  document.getElementById("resCount5").textContent = counts[5];
+  document.getElementById("resCount4").textContent = counts[4];
+  // グリッド
+  const grid = document.getElementById("resultGrid");
+  grid.innerHTML = "";
+  currentResult.forEach((r, i) => {
+    const card = document.createElement("div");
+    card.className = `result-card r${r.displayRarity}`;
+    card.style.animationDelay = (i * 0.03) + "s";
+    const label = r.displayRarity === 6 ? "★6" : (r.displayRarity === 5 ? "★5" : "★4");
+    card.innerHTML = `
+      <img class="img" src="${encodeURI(r.char.image)}" alt="${escapeHtml(r.char.name)}" loading="lazy" onerror="this.style.opacity=0.2">
+      <span class="rbadge">${label}</span>
+      <div class="name">${escapeHtml(r.char.name)}</div>`;
+    grid.appendChild(card);
+  });
+}
+
+/* ========== 履歴画面 ========== */
+function renderHistoryScreen(){
+  const u = currentUser();
+  if(!u){ goto("top"); return; }
+  const list = document.getElementById("historyList");
+  list.innerHTML = "";
+  const hist = u.history || [];
+  if(hist.length === 0){
+    list.innerHTML = '<div class="history-empty">まだ記録がありません</div>';
+    return;
+  }
+  hist.forEach((h, idx) => {
+    const counts = {6:0, 5:0, 4:0};
+    h.results.forEach(r => counts[r.dr]++);
+    const date = new Date(h.ts);
+    const dstr = `${date.getFullYear()}/${String(date.getMonth()+1).padStart(2,"0")}/${String(date.getDate()).padStart(2,"0")} ${String(date.getHours()).padStart(2,"0")}:${String(date.getMinutes()).padStart(2,"0")}`;
+    const item = document.createElement("div");
+    item.className = "history-item";
+    item.innerHTML = `
+      <div class="ts">#${hist.length-idx} — ${dstr}</div>
+      <div class="mini-counts">
+        ${counts[6] ? `<span class="mc c6">★6×${counts[6]}</span>` : ""}
+        ${counts[5] ? `<span class="mc c5">★5×${counts[5]}</span>` : ""}
+        ${counts[4] ? `<span class="mc c4">★4×${counts[4]}</span>` : ""}
+      </div>`;
+    item.onclick = () => {
+      // 過去の結果を表示
+      currentResult = h.results.map(r => ({
+        char: CHARACTERS.find(c => c.id === r.id),
+        isSix: r.isSix,
+        displayRarity: r.dr,
+      })).filter(r => r.char);
+      goto("result");
+    };
+    list.appendChild(item);
+  });
+}
+
+function clearHistory(){
+  const u = currentUser(); if(!u) return;
+  if(!confirm("祈願の軌跡をすべて忘れますか？この行いは取り消せません。")) return;
+  u.history = [];
+  saveState();
+  renderHistoryScreen();
+}
+
+
+/* ========== ガチャ演出 ========== */
+let animTimers = [];
+let oboIdx = 0;
+let oboQueue = [];
+
+function clearAnimTimers(){
+  animTimers.forEach(t => clearTimeout(t));
+  animTimers = [];
+}
+
+function showAnimStage(name){
+  document.querySelectorAll(".anim-stage").forEach(el => el.classList.remove("show"));
+  const el = document.querySelector(`.anim-stage[data-stage="${name}"]`);
+  if(el){
+    // 強制再フロー → animation を再起動
+    el.style.animation = "none"; void el.offsetWidth; el.style.animation = "";
+    // 子要素のanimationもリセット
+    el.querySelectorAll("*").forEach(c => {
+      const an = getComputedStyle(c).animationName;
+      if(an && an !== "none"){
+        c.style.animation = "none"; void c.offsetWidth; c.style.animation = "";
+      }
+    });
+    el.classList.add("show");
+  }
+}
+
+function getTier(results){
+  if(results.some(r => r.displayRarity === 6)) return "red";
+  if(results.some(r => r.displayRarity === 5)) return "gold";
+  return "blue";
+}
+
+function startGachaAnimation(results){
+  clearAnimTimers();
+  document.getElementById("screen-animation").classList.add("active");
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+
+  const tier = getTier(results);
+
+  // Stage 1: 流れ星 (2.8s)
+  showAnimStage("meteor");
+  animTimers.push(setTimeout(() => runStageSideview(results, tier), 2800));
+}
+
+function runStageSideview(results, tier){
+  // Stage 2: 9秒かけてゆっくり横切る流れ星。光が徐々に巨大化し、色も段階的に変化。
+  const m = document.getElementById("bigMeteor");
+  m.className = "big-meteor tier-" + tier;
+  showAnimStage("sideview");
+  // duration 9s と同期
+  animTimers.push(setTimeout(() => runStageOrbs(results), 9200));
+}
+
+function runStageOrbs(results){
+  // Stage 3: 0.3秒間隔で1つずつ流れる小流れ星。★4→★5→★6 順。
+  // showAnimStage は animation を強制リセットするので、子要素を追加する前にステージを表示する必要がある。
+  const area = document.getElementById("orbsArea");
+  area.innerHTML = "";
+  showAnimStage("orbs");  // 先にステージを表示（子は空なのでリセット影響なし）
+  // 抽選で出た順番そのまま（並び替えなし）
+  const ordered = results.slice();
+  const INTERVAL = 0.3;
+  // 子の追加は次フレームで（ステージ表示確定後）→ animation-delay が確実に反映される
+  requestAnimationFrame(() => {
+    ordered.forEach((r, i) => {
+      const cls = r.displayRarity === 6 ? "red" : (r.displayRarity === 5 ? "gold" : "purple");
+      const m = document.createElement("div");
+      m.className = "mini-meteor " + cls;
+      // 画面の左上付近を起点にして、対角線（右下）方向に流す
+      const topPct = -5 + (i * 3) % 25;       // -5% ～ 19%（上部）
+      const leftPct = -10 + (Math.random() * 18); // -10% ～ 8%（左寄り）
+      m.style.top = topPct + "%";
+      m.style.left = leftPct + "%";
+      m.style.animationDelay = (i * INTERVAL) + "s";
+      area.appendChild(m);
+    });
+  });
+  // 15個 * 0.3s = 4.5s + 2s 落下 = 約6.5s
+  animTimers.push(setTimeout(() => runStageLineup(results), 6500));
+}
+
+function runStageLineup(results){
+  // Stage 4: 15体ラインナップ
+  const grid = document.getElementById("lineupGrid");
+  grid.innerHTML = "";
+  showAnimStage("lineup");  // 先に表示
+  requestAnimationFrame(() => {
+    results.forEach((r, i) => {
+      const c = document.createElement("div");
+      c.className = "lineup-card r" + r.displayRarity;
+      c.style.animationDelay = (i * 0.06) + "s";
+      grid.appendChild(c);
+    });
+  });
+  animTimers.push(setTimeout(() => runStageOneByOne(results), 2400));
+}
+
+function runStageOneByOne(results){
+  // Stage 5: 1体ずつクリックで進める。並び替えなしの抽選順そのまま。
+  oboQueue = results.slice();
+  oboIdx = 0;
+  document.getElementById("oboProgressTotal").textContent = oboQueue.length;
+  showAnimStage("onebyone");
+  showOboCurrent();
+}
+
+function showOboCurrent(){
+  if(oboIdx >= oboQueue.length){
+    finishGachaAnimation();
+    return;
+  }
+  const r = oboQueue[oboIdx];
+  const card = document.getElementById("oboCard");
+  const burst = document.getElementById("oboBurst");
+  // クラス更新
+  card.className = "obo-card r" + r.displayRarity;
+  burst.className = "obo-burst r" + r.displayRarity;
+  // アニメ再起動
+  card.style.animation = "none"; void card.offsetWidth; card.style.animation = "";
+  // 中身
+  document.getElementById("oboImg").src = encodeURI(r.char.image);
+  document.getElementById("oboImg").alt = r.char.name;
+  document.getElementById("oboName").textContent = r.char.name;
+  document.getElementById("oboRarity").textContent =
+    r.displayRarity === 6 ? "★ ★ ★ ★ ★ ★" :
+    r.displayRarity === 5 ? "★ ★ ★ ★ ★" : "★ ★ ★ ★";
+  document.getElementById("oboProgressNum").textContent = (oboIdx + 1);
+}
+
+function oboNext(){
+  oboIdx++;
+  showOboCurrent();
+}
+
+function skipAnimation(){
+  clearAnimTimers();
+  finishGachaAnimation();
+}
+
+function finishGachaAnimation(){
+  document.getElementById("screen-animation").classList.remove("active");
+  goto("result");
+}
+
+/* ========== ユーティリティ ========== */
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+/* ========== 初期化 ========== */
+document.addEventListener("DOMContentLoaded",()=>{
+  document.querySelectorAll(".modal-bg").forEach(m=>{
+    m.addEventListener("click",e=>{if(e.target===m) m.classList.remove("show")});
+  });
+  document.getElementById("newUserName").addEventListener("keydown",e=>{
+    if(e.key==="Enter") createUser();
+  });
+  document.addEventListener("keydown",e=>{
+    if(e.key==="Escape"){
+      // 演出中ならスキップ、それ以外はモーダル閉じ
+      if(document.getElementById("screen-animation").classList.contains("active")){
+        skipAnimation();
+      }else{
+        document.querySelectorAll(".modal-bg").forEach(m=>m.classList.remove("show"));
+      }
+    }
+    // Space/Enter で 1体ずつ次へ
+    if((e.key===" "||e.key==="Enter") && document.querySelector('.anim-stage[data-stage="onebyone"].show')){
+      e.preventDefault();
+      oboNext();
+    }
+  });
+  goto("top");
+});
+</script>
+</body>
+</html>
