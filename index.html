@@ -475,28 +475,6 @@ main{position:relative;z-index:4;padding:24px;max-width:1200px;margin:0 auto}
 }
 
 
-/* 演出デモボタン */
-.demo-row{
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  margin-top:18px;padding-top:18px;
-  border-top:1px dashed rgba(201,168,106,.18);
-  flex-wrap:wrap;
-}
-.demo-row .demo-label{
-  font-size:12px;color:var(--text-dim);margin-right:6px;
-}
-.demo-btn{
-  padding:6px 14px !important;font-size:12px !important;
-  letter-spacing:.02em !important;
-}
-.demo-btn.demo-A{color:#ffb0b0;border-color:rgba(255,82,82,.45)}
-.demo-btn.demo-B{color:#c9a4f0;border-color:rgba(155,123,217,.45)}
-.demo-btn.demo-C{color:#ffd478;border-color:rgba(212,144,74,.55)}
-.demo-btn.demo-D{color:#ff8080;border-color:rgba(255,82,82,.55)}
-.demo-note{
-  text-align:center;margin-top:8px;
-  font-size:11px;color:var(--text-dim);
-}
 
 /* 演出パターンの小バッジ */
 .pattern-badge{
@@ -954,15 +932,7 @@ main{position:relative;z-index:4;padding:24px;max-width:1200px;margin:0 auto}
       <button class="btn primary" id="wishBtn" onclick="executeGacha()">願いを捧げる</button>
     </div>
 
-    <div class="demo-row">
-      <span class="demo-label">演出テスト：</span>
-      <button class="btn ghost demo-btn" onclick="executeGachaDemo('default')">デフォルト</button>
-      <button class="btn ghost demo-btn demo-A" onclick="executeGachaDemo('A')">A</button>
-      <button class="btn ghost demo-btn demo-B" onclick="executeGachaDemo('B')">B</button>
-      <button class="btn ghost demo-btn demo-C" onclick="executeGachaDemo('C')">C</button>
-      <button class="btn ghost demo-btn demo-D" onclick="executeGachaDemo('D')">D</button>
-    </div>
-    <p class="demo-note">パターンA〜Dは★6を必ず含むよう調整した結果で演出が動きます。「願いの灯」を1名以上指定している必要があります。</p>
+
 
     <div style="margin-top:30px;display:flex;gap:12px;justify-content:center">
       <button class="btn ghost" onclick="goto('history')">過ぎし日の祈願</button>
@@ -1641,55 +1611,6 @@ function selectSpecialPattern(results){
   if((r -= 10) < 0) return "B";
   if((r -= 10) < 0) return "C";
   return "D";
-}
-
-/* 演出パターンを強制したデモ祈願。
-   - A/B/C/D を指定したのに★6が結果に無い場合、★6指定キャラから1名ねじ込む */
-function executeGachaDemo(pattern){
-  const u = currentUser();
-  if(!u){ goto("top"); return; }
-  if((u.owned||[]).length < 15){
-    alert("仲間が15名に満たないようです。先に「旅の仲間」で迎えてください。");
-    goto("settings"); return;
-  }
-  if(pattern !== "default" && (u.sixStars||[]).length === 0){
-    alert("パターンA〜Dを試すには「願いの灯」を1名以上指定してください。");
-    return;
-  }
-
-  let results = drawGacha(u, 15);
-  // A〜Dを試すのに★6が結果に居なければ、★6指定キャラから1名差し込む
-  if(pattern !== "default" && !results.some(r => r.displayRarity === 6)){
-    const sixIds = u.sixStars;
-    const sixId = sixIds[Math.floor(Math.random() * sixIds.length)];
-    const sixChar = CHARACTERS.find(c => c.id === sixId);
-    if(sixChar){
-      // すでに同じキャラが結果にいたらそのキャラを★6に昇格、
-      // いなければ★4キャラを1枠置き換える
-      const dupIdx = results.findIndex(r => r.char.id === sixId);
-      if(dupIdx >= 0){
-        results[dupIdx] = {char: sixChar, isSix: true, displayRarity: 6};
-      }else{
-        const replaceIdx = results.findIndex(r => r.displayRarity === 4);
-        const idx = replaceIdx >= 0 ? replaceIdx : 0;
-        results[idx] = {char: sixChar, isSix: true, displayRarity: 6};
-      }
-    }
-  }
-
-  // 履歴に保存
-  u.history = u.history || [];
-  u.history.unshift({
-    ts: Date.now(),
-    results: results.map(r => ({id: r.char.id, isSix: r.isSix, dr: r.displayRarity})),
-    demo: pattern,  // デモ印
-  });
-  if(u.history.length > 100) u.history.length = 100;
-  saveState();
-
-  currentResult = results;
-  forcedPattern = pattern;
-  startGachaAnimation(results);
 }
 
 function showPatternBadge(pattern){
