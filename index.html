@@ -423,6 +423,24 @@ main{position:relative;z-index:4;padding:24px;max-width:1200px;margin:0 auto}
 .navbtn:disabled{opacity:.3;cursor:not-allowed}
 
 
+
+/* 激レア演出：ピザ流れ星（0.000061035 ≒ 1/16384）。②（最初の流れ星）が🍕に */
+.meteor.pizza-meteor{
+  background:transparent !important;
+  box-shadow:none !important;
+  width:50px !important;height:50px !important;
+}
+.meteor.pizza-meteor::before{
+  content:"🍕";
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:50px;line-height:1;
+  filter:drop-shadow(0 0 16px rgba(255,200,80,.7));
+}
+.meteor.pizza-meteor::after{
+  display:none !important;
+}
+
 /* ★6限定演出パターン用 */
 
 /* パターンA: ②（最初の流れ星）を赤くする */
@@ -476,24 +494,7 @@ main{position:relative;z-index:4;padding:24px;max-width:1200px;margin:0 auto}
 
 
 
-/* 演出パターンの小バッジ */
-.pattern-badge{
-  position:fixed;top:24px;left:24px;z-index:300;
-  padding:6px 12px;font-size:11px;letter-spacing:.05em;
-  background:rgba(255,82,82,.15);
-  border:1px solid var(--r6);
-  color:#ffb0b0;
-  opacity:0;pointer-events:none;
-}
-.pattern-badge.show{
-  opacity:.85;animation:badge-fade 4s ease forwards;
-}
-@keyframes badge-fade{
-  0%{opacity:0;transform:translateY(-10px)}
-  10%{opacity:.85;transform:translateY(0)}
-  90%{opacity:.85}
-  100%{opacity:0}
-}
+
 
 /* ========== ガチャ演出 ========== */
 #screen-animation{
@@ -971,7 +972,6 @@ main{position:relative;z-index:4;padding:24px;max-width:1200px;margin:0 auto}
 <!-- ===== ガチャ演出 ===== -->
 <section id="screen-animation">
   <button class="btn ghost skip-btn" onclick="skipAnimation()">とばす</button>
-  <div class="pattern-badge" id="patternBadge"></div>
 
   <div class="anim-stage stage-meteor" data-stage="meteor">
     <div class="stars-bg"></div>
@@ -1613,16 +1613,7 @@ function selectSpecialPattern(results){
   return "D";
 }
 
-function showPatternBadge(pattern){
-  if(pattern === "default") return;
-  const b = document.getElementById("patternBadge");
-  if(!b) return;
-  const labels = {A:"限定演出 A", B:"限定演出 B", C:"限定演出 C", D:"限定演出 D"};
-  b.textContent = labels[pattern] || "";
-  b.classList.remove("show");
-  void b.offsetWidth;
-  b.classList.add("show");
-}
+
 
 function clearAnimTimers(){
   animTimers.forEach(t => clearTimeout(t));
@@ -1660,7 +1651,24 @@ function startGachaAnimation(results){
   const tier = getTier(results);
   // 限定演出パターンを決定（★6が無ければ常に default）
   currentPattern = selectSpecialPattern(results);
-  showPatternBadge(currentPattern);
+
+  // ===== 激レア演出（★6が引かれた時にのみ独立判定。A/B/C/Dとは無関係） =====
+  const hasSix = results.some(r => r.displayRarity === 6);
+  const rareTobasu   = hasSix && Math.random() < 0.01;          // 1%
+  const rareKamisama = hasSix && Math.random() < 0.004;         // 0.4%
+  const rarePizza    = hasSix && Math.random() < 0.000061035;   // ≒ 1/16384
+  // ① とばす → 飛ばす
+  const skipBtn = document.querySelector('.skip-btn');
+  if(skipBtn) skipBtn.textContent = rareTobasu ? "飛ばす" : "とばす";
+  // ② 願いの星が昇る → ！！！！！
+  const hint = document.querySelector('.meteor-hint');
+  if(hint) hint.textContent = rareKamisama ? "！！！！！" : "願いの星が昇る";
+  // ② 最初の流れ星（meteor）→ ピザ
+  const briefForPizza = document.querySelector('#screen-animation .meteor');
+  if(briefForPizza){
+    if(rarePizza) briefForPizza.classList.add('pizza-meteor');
+    else briefForPizza.classList.remove('pizza-meteor');
+  }
 
   // パターンA: ②（最初の流れ星）を赤に
   const brief = document.querySelector('#screen-animation .meteor');
