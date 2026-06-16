@@ -422,101 +422,6 @@ main{position:relative;z-index:4;padding:24px;max-width:1200px;margin:0 auto}
 .navbtn.active{color:var(--gold-glow);border-color:var(--gold);background:rgba(212,180,106,.15)}
 .navbtn:disabled{opacity:.3;cursor:not-allowed}
 
-
-/* ★6限定演出パターン用 */
-
-/* パターンA: ②（最初の流れ星）を赤くする */
-.meteor.initial-red{
-  background:#ff5252 !important;
-  box-shadow:0 0 30px 12px #ff5252,0 0 60px 24px rgba(255,82,82,.6) !important;
-}
-.meteor.initial-red::after{
-  background:linear-gradient(90deg,transparent,#ff5252,#ffd0d0) !important;
-}
-
-/* ABCD共通: ③（大流れ星）は赤にはせず、★6キャラの本来のレアリティ色まで進む
-   （★4キャラ → 紫のまま、★5キャラ → 金まで進む）。
-   既存の tier-blue（紫止まり）/ tier-gold（金止まり）クラスを流用する */
-
-/* パターンC: ④の小流れ星で2秒遅れの赤い15個目 */
-.mini-meteor.late-red-orb{
-  width:14px !important;height:14px !important;
-  animation:mini-fall-late 2.5s cubic-bezier(.3,.6,.5,1) forwards !important;
-}
-@keyframes mini-fall-late{
-  0%{opacity:0;transform:scale(.4) translate(0,0)}
-  8%{opacity:1;transform:scale(1.4) translate(0,0)}
-  100%{
-    opacity:0;
-    transform:scale(1.6) translate(110vw,62vh);
-  }
-}
-
-/* パターンD: 1体ずつの「飛ばされる」演出 */
-.obo-card.fly-right{
-  animation:card-fly-right 1s cubic-bezier(.5,.05,.7,1) forwards !important;
-}
-@keyframes card-fly-right{
-  0%{transform:scale(1) translateX(0) rotate(0);opacity:1}
-  15%{transform:scale(1.1) translateX(-10px) rotate(-3deg);opacity:1}
-  100%{transform:scale(1.4) translateX(150vw) rotate(15deg);opacity:0}
-}
-
-/* パターンD: 復活する★6カード（左から飛び込む） */
-.obo-card.reveal-six{
-  animation:reveal-six-in 1s cubic-bezier(.3,.1,.4,1.2) forwards !important;
-  border-color:var(--r6) !important;
-  box-shadow:0 0 60px rgba(255,82,82,.8),0 0 120px rgba(255,82,82,.5) !important;
-}
-@keyframes reveal-six-in{
-  0%{opacity:0;transform:translateX(-150vw) scale(1.4) rotate(-15deg)}
-  60%{opacity:1;transform:translateX(0) scale(1.1) rotate(2deg)}
-  100%{opacity:1;transform:translateX(0) scale(1) rotate(0)}
-}
-
-
-/* 演出デモボタン */
-.demo-row{
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  margin-top:18px;padding-top:18px;
-  border-top:1px dashed rgba(201,168,106,.18);
-  flex-wrap:wrap;
-}
-.demo-row .demo-label{
-  font-size:12px;color:var(--text-dim);margin-right:6px;
-}
-.demo-btn{
-  padding:6px 14px !important;font-size:12px !important;
-  letter-spacing:.02em !important;
-}
-.demo-btn.demo-A{color:#ffb0b0;border-color:rgba(255,82,82,.45)}
-.demo-btn.demo-B{color:#c9a4f0;border-color:rgba(155,123,217,.45)}
-.demo-btn.demo-C{color:#ffd478;border-color:rgba(212,144,74,.55)}
-.demo-btn.demo-D{color:#ff8080;border-color:rgba(255,82,82,.55)}
-.demo-note{
-  text-align:center;margin-top:8px;
-  font-size:11px;color:var(--text-dim);
-}
-
-/* 演出パターンの小バッジ */
-.pattern-badge{
-  position:fixed;top:24px;left:24px;z-index:300;
-  padding:6px 12px;font-size:11px;letter-spacing:.05em;
-  background:rgba(255,82,82,.15);
-  border:1px solid var(--r6);
-  color:#ffb0b0;
-  opacity:0;pointer-events:none;
-}
-.pattern-badge.show{
-  opacity:.85;animation:badge-fade 4s ease forwards;
-}
-@keyframes badge-fade{
-  0%{opacity:0;transform:translateY(-10px)}
-  10%{opacity:.85;transform:translateY(0)}
-  90%{opacity:.85}
-  100%{opacity:0}
-}
-
 /* ========== ガチャ演出 ========== */
 #screen-animation{
   position:fixed;inset:0;z-index:100;
@@ -954,16 +859,6 @@ main{position:relative;z-index:4;padding:24px;max-width:1200px;margin:0 auto}
       <button class="btn primary" id="wishBtn" onclick="executeGacha()">願いを捧げる</button>
     </div>
 
-    <div class="demo-row">
-      <span class="demo-label">演出テスト：</span>
-      <button class="btn ghost demo-btn" onclick="executeGachaDemo('default')">デフォルト</button>
-      <button class="btn ghost demo-btn demo-A" onclick="executeGachaDemo('A')">A</button>
-      <button class="btn ghost demo-btn demo-B" onclick="executeGachaDemo('B')">B</button>
-      <button class="btn ghost demo-btn demo-C" onclick="executeGachaDemo('C')">C</button>
-      <button class="btn ghost demo-btn demo-D" onclick="executeGachaDemo('D')">D</button>
-    </div>
-    <p class="demo-note">パターンA〜Dは★6を必ず含むよう調整した結果で演出が動きます。「願いの灯」を1名以上指定している必要があります。</p>
-
     <div style="margin-top:30px;display:flex;gap:12px;justify-content:center">
       <button class="btn ghost" onclick="goto('history')">過ぎし日の祈願</button>
       <button class="btn ghost" onclick="goto('settings')">← 準備へ戻る</button>
@@ -1001,7 +896,6 @@ main{position:relative;z-index:4;padding:24px;max-width:1200px;margin:0 auto}
 <!-- ===== ガチャ演出 ===== -->
 <section id="screen-animation">
   <button class="btn ghost skip-btn" onclick="skipAnimation()">とばす</button>
-  <div class="pattern-badge" id="patternBadge"></div>
 
   <div class="anim-stage stage-meteor" data-stage="meteor">
     <div class="stars-bg"></div>
@@ -1620,88 +1514,6 @@ function clearHistory(){
 let animTimers = [];
 let oboIdx = 0;
 let oboQueue = [];
-let currentPattern = "default";  // ★6限定演出パターン: default / A / B / C / D
-
-/* ★6限定演出パターン選択：★6が結果にある時のみ判定。
-   割合 = default80% / A6% / B6% / C6% / D2% */
-let forcedPattern = null;  // デモボタン経由で次の祈願に強制するパターン
-
-function selectSpecialPattern(results){
-  // デモ強制が入っていればそれを使い、消費
-  if(forcedPattern !== null){
-    const p = forcedPattern;
-    forcedPattern = null;
-    return p;
-  }
-  const hasSix = results.some(r => r.displayRarity === 6);
-  if(!hasSix) return "default";
-  let r = Math.random() * 100;
-  if((r -= 60) < 0) return "default";
-  if((r -= 10) < 0) return "A";
-  if((r -= 10) < 0) return "B";
-  if((r -= 10) < 0) return "C";
-  return "D";
-}
-
-/* 演出パターンを強制したデモ祈願。
-   - A/B/C/D を指定したのに★6が結果に無い場合、★6指定キャラから1名ねじ込む */
-function executeGachaDemo(pattern){
-  const u = currentUser();
-  if(!u){ goto("top"); return; }
-  if((u.owned||[]).length < 15){
-    alert("仲間が15名に満たないようです。先に「旅の仲間」で迎えてください。");
-    goto("settings"); return;
-  }
-  if(pattern !== "default" && (u.sixStars||[]).length === 0){
-    alert("パターンA〜Dを試すには「願いの灯」を1名以上指定してください。");
-    return;
-  }
-
-  let results = drawGacha(u, 15);
-  // A〜Dを試すのに★6が結果に居なければ、★6指定キャラから1名差し込む
-  if(pattern !== "default" && !results.some(r => r.displayRarity === 6)){
-    const sixIds = u.sixStars;
-    const sixId = sixIds[Math.floor(Math.random() * sixIds.length)];
-    const sixChar = CHARACTERS.find(c => c.id === sixId);
-    if(sixChar){
-      // すでに同じキャラが結果にいたらそのキャラを★6に昇格、
-      // いなければ★4キャラを1枠置き換える
-      const dupIdx = results.findIndex(r => r.char.id === sixId);
-      if(dupIdx >= 0){
-        results[dupIdx] = {char: sixChar, isSix: true, displayRarity: 6};
-      }else{
-        const replaceIdx = results.findIndex(r => r.displayRarity === 4);
-        const idx = replaceIdx >= 0 ? replaceIdx : 0;
-        results[idx] = {char: sixChar, isSix: true, displayRarity: 6};
-      }
-    }
-  }
-
-  // 履歴に保存
-  u.history = u.history || [];
-  u.history.unshift({
-    ts: Date.now(),
-    results: results.map(r => ({id: r.char.id, isSix: r.isSix, dr: r.displayRarity})),
-    demo: pattern,  // デモ印
-  });
-  if(u.history.length > 100) u.history.length = 100;
-  saveState();
-
-  currentResult = results;
-  forcedPattern = pattern;
-  startGachaAnimation(results);
-}
-
-function showPatternBadge(pattern){
-  if(pattern === "default") return;
-  const b = document.getElementById("patternBadge");
-  if(!b) return;
-  const labels = {A:"限定演出 A", B:"限定演出 B", C:"限定演出 C", D:"限定演出 D"};
-  b.textContent = labels[pattern] || "";
-  b.classList.remove("show");
-  void b.offsetWidth;
-  b.classList.add("show");
-}
 
 function clearAnimTimers(){
   animTimers.forEach(t => clearTimeout(t));
@@ -1737,16 +1549,6 @@ function startGachaAnimation(results){
   document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
 
   const tier = getTier(results);
-  // 限定演出パターンを決定（★6が無ければ常に default）
-  currentPattern = selectSpecialPattern(results);
-  showPatternBadge(currentPattern);
-
-  // パターンA: ②（最初の流れ星）を赤に
-  const brief = document.querySelector('#screen-animation .meteor');
-  if(brief){
-    if(currentPattern === "A") brief.classList.add("initial-red");
-    else brief.classList.remove("initial-red");
-  }
 
   // Stage 1: 流れ星 (2.8s)
   showAnimStage("meteor");
@@ -1754,112 +1556,51 @@ function startGachaAnimation(results){
 }
 
 function runStageSideview(results, tier){
-  // Stage 2 (仕様③): 9秒かけてゆっくり横切る流れ星
+  // Stage 2: 9秒かけてゆっくり横切る流れ星。光が徐々に巨大化し、色も段階的に変化。
   const m = document.getElementById("bigMeteor");
-  if(currentPattern === "B"){
-    // パターンB: 紫のまま9秒走り抜ける（色が紫から上がらない）。本来★5でも金にしない。
-    m.className = "big-meteor tier-blue";
-  }else if(currentPattern === "C" || currentPattern === "D"){
-    // C/D: ★6キャラの本来レアリティ色まで（赤に上がらない）
-    const sixR = results.filter(r => r.displayRarity === 6);
-    let naturalTier = "blue";
-    if(sixR.length > 0){
-      const maxNatural = Math.max(...sixR.map(r => r.char.rarity));
-      naturalTier = (maxNatural === 5) ? "gold" : "blue";
-    }
-    m.className = "big-meteor tier-" + naturalTier;
-  }else{
-    m.className = "big-meteor tier-" + tier;
-  }
+  m.className = "big-meteor tier-" + tier;
   showAnimStage("sideview");
+  // duration 9s と同期
   animTimers.push(setTimeout(() => runStageOrbs(results), 9200));
 }
 
 function runStageOrbs(results){
-  // Stage 3 (仕様④): 0.3秒間隔で小流れ星
+  // Stage 3: 0.3秒間隔で1つずつ流れる小流れ星。★4→★5→★6 順。
+  // showAnimStage は animation を強制リセットするので、子要素を追加する前にステージを表示する必要がある。
   const area = document.getElementById("orbsArea");
   area.innerHTML = "";
-  showAnimStage("orbs");
+  showAnimStage("orbs");  // 先にステージを表示（子は空なのでリセット影響なし）
+  // 抽選で出た順番そのまま（並び替えなし）
   const ordered = results.slice();
   const INTERVAL = 0.3;
-
-  if(currentPattern === "C"){
-    // パターンC: ★6 N個を除いた (15-N) 個を先に流す → 2秒待機 → 赤い★6を順に流す
-    const sixResults = ordered.filter(r => r.displayRarity === 6);
-    const firstBatch = ordered.filter(r => r.displayRarity !== 6);
-    const sixCount = sixResults.length;
-    requestAnimationFrame(() => {
-      firstBatch.forEach((r, i) => {
-        const cls = r.displayRarity === 5 ? "gold" : "purple";
-        const m = document.createElement("div");
-        m.className = "mini-meteor " + cls;
-        m.style.top = (-5 + (i * 3) % 25) + "%";
-        m.style.left = (-10 + Math.random() * 18) + "%";
-        m.style.animationDelay = (i * INTERVAL) + "s";
-        area.appendChild(m);
-      });
-    });
-    // (15-N) 個分の流れ＋落下 + 2秒待機 後に N個の赤★6オーブを順に流す
-    const lateDelay = (firstBatch.length * INTERVAL + 2 + 2) * 1000;
-    const LATE_INTERVAL = 0.5;
-    sixResults.forEach((r, k) => {
-      animTimers.push(setTimeout(() => {
-        const m = document.createElement("div");
-        m.className = "mini-meteor red late-red-orb";
-        m.style.top = (3 + k * 4) + "%";
-        m.style.left = (-5 - k * 2) + "%";
-        area.appendChild(m);
-      }, lateDelay + k * LATE_INTERVAL * 1000));
-    });
-    const totalDelay = lateDelay + Math.max(0, sixCount - 1) * LATE_INTERVAL * 1000 + 2700;
-    animTimers.push(setTimeout(() => runStageLineup(results), totalDelay));
-    return;
-  }
-
-  // A は②で赤を出したのでデフォルト挙動。
-  // B は④で初めて赤が出る（★6オーブが赤）→ デフォルトと同じ。
-  // D は⑥まで★6を隠す → 本来レアリティ色で。
+  // 子の追加は次フレームで（ステージ表示確定後）→ animation-delay が確実に反映される
   requestAnimationFrame(() => {
     ordered.forEach((r, i) => {
-      let cls;
-      if(currentPattern === "D"){
-        // D: ★6を④でも隠す
-        if(r.displayRarity === 6){
-          cls = (r.char.rarity === 5) ? "gold" : "purple";
-        }else{
-          cls = r.displayRarity === 5 ? "gold" : "purple";
-        }
-      }else{
-        // default, A, B → デフォルト（★6は赤）
-        cls = r.displayRarity === 6 ? "red" : (r.displayRarity === 5 ? "gold" : "purple");
-      }
+      const cls = r.displayRarity === 6 ? "red" : (r.displayRarity === 5 ? "gold" : "purple");
       const m = document.createElement("div");
       m.className = "mini-meteor " + cls;
-      m.style.top = (-5 + (i * 3) % 25) + "%";
-      m.style.left = (-10 + Math.random() * 18) + "%";
+      // 画面の左上付近を起点にして、対角線（右下）方向に流す
+      const topPct = -5 + (i * 3) % 25;       // -5% ～ 19%（上部）
+      const leftPct = -10 + (Math.random() * 18); // -10% ～ 8%（左寄り）
+      m.style.top = topPct + "%";
+      m.style.left = leftPct + "%";
       m.style.animationDelay = (i * INTERVAL) + "s";
       area.appendChild(m);
     });
   });
+  // 15個 * 0.3s = 4.5s + 2s 落下 = 約6.5s
   animTimers.push(setTimeout(() => runStageLineup(results), 6500));
 }
 
 function runStageLineup(results){
-  // Stage 4 (仕様⑤): 15体ラインナップ。
-  // A/B/C はそれ以前で赤が出ているのでデフォルト挙動。
-  // D は⑥まで★6を隠すので、★6カードを本来のレアリティ枠で表示。
+  // Stage 4: 15体ラインナップ
   const grid = document.getElementById("lineupGrid");
   grid.innerHTML = "";
-  showAnimStage("lineup");
+  showAnimStage("lineup");  // 先に表示
   requestAnimationFrame(() => {
     results.forEach((r, i) => {
       const c = document.createElement("div");
-      let displayR = r.displayRarity;
-      if(currentPattern === "D" && r.displayRarity === 6){
-        // D: ★6を本来のレアリティで隠す
-        displayR = r.char.rarity;
-      }
-      c.className = "lineup-card r" + displayR;
+      c.className = "lineup-card r" + r.displayRarity;
       c.style.animationDelay = (i * 0.06) + "s";
       grid.appendChild(c);
     });
@@ -1868,48 +1609,8 @@ function runStageLineup(results){
 }
 
 function runStageOneByOne(results){
-  // Stage 5 (仕様⑥): 1体ずつクリックで進める
-  if(currentPattern === "D"){
-    // パターンD: 各★6の直前に、「以前に出た非★6キャラのコピー」をデコイとして挿入。
-    // ユーザーには「さっきも出たから重複バグ？」と思わせて、クリックすると★6に変わる。
-    oboQueue = [];
-    const usedDecoy = new Set();
-    for(let i = 0; i < results.length; i++){
-      const r = results[i];
-      if(r.displayRarity === 6){
-        let decoySrc = null;
-        // 優先：既にoboQueueに入っている非★6（「さっき出た」感）
-        for(let j = oboQueue.length - 1; j >= 0; j--){
-          const q = oboQueue[j];
-          if(q.displayRarity !== 6 && !q.isDecoy && !usedDecoy.has(q.char.id)){
-            decoySrc = q; break;
-          }
-        }
-        // 既出が無ければ未来の非★6から1つ拝借
-        if(!decoySrc){
-          for(let j = i + 1; j < results.length; j++){
-            const q = results[j];
-            if(q.displayRarity !== 6 && !usedDecoy.has(q.char.id)){
-              decoySrc = q; break;
-            }
-          }
-        }
-        if(decoySrc){
-          usedDecoy.add(decoySrc.char.id);
-          oboQueue.push({
-            char: decoySrc.char,
-            isSix: false,
-            displayRarity: decoySrc.char.rarity,
-            isDecoy: true,
-            decoyForId: r.char.id,
-          });
-        }
-      }
-      oboQueue.push(r);
-    }
-  }else{
-    oboQueue = results.slice();
-  }
+  // Stage 5: 1体ずつクリックで進める。並び替えなしの抽選順そのまま。
+  oboQueue = results.slice();
   oboIdx = 0;
   document.getElementById("oboProgressTotal").textContent = oboQueue.length;
   showAnimStage("onebyone");
@@ -1940,30 +1641,6 @@ function showOboCurrent(){
 }
 
 function oboNext(){
-  const current = oboQueue[oboIdx];
-  if(current && current.isDecoy){
-    // パターンD: 飛ばされて消える → 次（本物★6）が左から飛び込む
-    const card = document.getElementById("oboCard");
-    card.classList.add("fly-right");
-    animTimers.push(setTimeout(() => {
-      card.classList.remove("fly-right");
-      oboIdx++;
-      const r = oboQueue[oboIdx];
-      if(r && r.displayRarity === 6){
-        card.className = "obo-card r6 reveal-six";
-        const burst = document.getElementById("oboBurst");
-        burst.className = "obo-burst r6";
-        document.getElementById("oboImg").src = encodeURI(r.char.image);
-        document.getElementById("oboImg").alt = r.char.name;
-        document.getElementById("oboName").textContent = r.char.name;
-        document.getElementById("oboRarity").textContent = "★ ★ ★ ★ ★ ★";
-        document.getElementById("oboProgressNum").textContent = (oboIdx + 1);
-      }else{
-        showOboCurrent();
-      }
-    }, 1000));
-    return;
-  }
   oboIdx++;
   showOboCurrent();
 }
